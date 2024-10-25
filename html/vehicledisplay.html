@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>車輛展示 - Legend Motor</title>
+    <base href="/">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/vehicledisplay.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Legend Motor</a>
+            <div class="nav-menu">
+                <a href="../html/index.html">首頁</a>
+                <a href="#">車輛展示</a>
+                <a href="#">保險服務</a>
+                <a href="#">關於我們</a>
+                <a href="#">登入</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="vehicle-showcase">
+        <div class="filter-section">
+            <select name="brand">
+                <option value="">品牌選擇</option>
+                <option value="toyota">豐田</option>
+                <option value="honda">本田</option>
+                <option value="lexus">凌志</option>
+            </select>
+            <select name="price">
+                <option value="">價格範圍</option>
+                <option value="0-300000">$0 - $300,000</option>
+                <option value="300000-600000">$300,000 - $600,000</option>
+                <option value="600000+">$600,000+</option>
+            </select>
+            <select name="type">
+                <option value="">車型</option>
+                <option value="sedan">房車</option>
+                <option value="suv">休旅車</option>
+                <option value="sports">跑車</option>
+            </select>
+
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="搜索車款...">
+            </div>
+
+        </div>
+
+        <div class="vehicles-grid">
+            <!-- 車輛卡片 1 -->
+            <div class="vehicle-card">
+                <div class="vehicle-image">
+                    <!-- 實際使用時替換成真實圖片 -->
+                    <img src="../images/car1.jpg" alt="Toyota Camry 2.5" style="width:100%; height:auto;">
+                </div>
+                <div class="vehicle-info">
+                    <h3>Toyota Camry 2.5</h3>
+                    <div class="vehicle-specs">
+                        <p>年份：2024</p>
+                        <p>里程：0 公里</p>
+                        <p>引擎：2.5L 直列四缸</p>
+                    </div>
+                    <div class="vehicle-price">HK$299,800</div>
+                    <a href="#" class="detail-button">查看詳情</a>
+                </div>
+            </div>
+
+            <!-- 車輛卡片 2 -->
+            <div class="vehicle-card">
+                <div class="vehicle-image">
+                    <img src="../images/car2.jpg" alt="Toyota Camry 2.5" style="width:100%; height:auto;">
+                </div>
+                <div class="vehicle-info">
+                    <h3>Lexus RX 350</h3>
+                    <div class="vehicle-specs">
+                        <p>年份：2024</p>
+                        <p>里程：0 公里</p>
+                        <p>引擎：3.5L V6</p>
+                    </div>
+                    <div class="vehicle-price">HK$688,000</div>
+                    <a href="#" class="detail-button">查看詳情</a>
+                </div>
+            </div>
+
+            <!-- 車輛卡片 3 -->
+            <div class="vehicle-card">
+                <div class="vehicle-image">
+                    <div style="color: #666;">車輛圖片</div>
+                </div>
+                <div class="vehicle-info">
+                    <h3>Honda Civic Type R</h3>
+                    <div class="vehicle-specs">
+                        <p>年份：2024</p>
+                        <p>里程：0 公里</p>
+                        <p>引擎：2.0L VTEC Turbo</p>
+                    </div>
+                    <div class="vehicle-price">HK$458,000</div>
+                    <a href="#" class="detail-button">查看詳情</a>
+                </div>
+            </div>
+
+            <div class="vehicle-card">
+                <div class="vehicle-image">
+                    <div style="color: #666;">車輛圖片</div>
+                </div>
+                <div class="vehicle-info">
+                    <h3>aston martin</h3>
+                    <div class="vehicle-specs">
+                        <p>年份：2024</p>
+                        <p>里程：0 公里</p>
+                        <p>引擎：2.0L VTEC Turbo</p>
+                    </div>
+                    <div class="vehicle-price">HK$458,000</div>
+                    <a href="#" class="detail-button">查看詳情</a>
+                </div>
+            </div>
+
+ 
+
+           
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>聯絡我們</h3>
+                <p>電話：+852 12345678</p>
+                <p>電郵：contact@legendmotor.com</p>
+                <p>地址：XXXXX</p>
+            </div>
+            <div class="footer-section">
+                <h3>營業時間</h3>
+                <p>星期一至五：09:00-21:00</p>
+                <p>星期六、日：10:00-20:00</p>
+            </div>
+            <div class="footer-section">
+                <h3>關注我們</h3>
+                <p>Facebook</p>
+                <p>Instagram</p>
+                <p>LINE</p>
+            </div>
+        </div>
+    </footer>
+    <script src="../js/vehicledisplay/vehicledisplay.js"></script>
+</body>
+</html>
