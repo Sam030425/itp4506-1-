@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>香港車保險購買</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        select, input[type="text"], input[type="number"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            color: green;
+        }
+        .plans {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            display: none;
+        }
+        .plan {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+        .plan:last-child {
+            border-bottom: none;
+        }
+        .buy-button {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .payment-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .close-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .thank-you-message {
+            margin-top: 20px;
+            color: blue;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>購買車保險</h1>
+        <form id="insuranceForm">
+            <label for="name">姓名：</label>
+            <input type="text" id="name" required>
+
+            <label for="age">年齡：</label>
+            <input type="number" id="age" required>
+
+            <label for="carAge">車齡（年）：</label>
+            <input type="number" id="carAge" required>
+
+            <label for="occupation">職業：</label>
+            <select id="occupation" required>
+                <option value="">請選擇</option>
+                <option value="office">辦公室工作</option>
+                <option value="driver">專業駕駛</option>
+                <option value="student">學生</option>
+                <option value="retired">退休人士</option>
+            </select>
+
+            <label for="insuranceType">選擇保險類型：</label>
+            <select id="insuranceType" required>
+                <option value="">請選擇</option>
+                <option value="thirdParty">第三者責任保險</option>
+                <option value="comprehensive">全面保險</option>
+                <option value="partial">部分全面保險</option>
+            </select>
+
+            <input type="submit" value="生成方案">
+        </form>
+        <div class="message" id="message"></div>
+        <div class="plans" id="plans"></div>
+        <div class="buy-button" id="buyButtonContainer" style="display: none;">
+            <button id="buyButton">購買方案</button>
+        </div>
+        <div id="thankYouSection" class="thank-you-message" style="display: none;"></div>
+    </div>
+
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <h2>付款頁面</h2>
+            <label for="paymentMethod">選擇支付方式：</label>
+            <select id="paymentMethod">
+                <option value="">請選擇</option>
+                <option value="creditCard">信用卡</option>
+                <option value="paypal">PayPal</option>
+                <option value="bankTransfer">銀行轉帳</option>
+            </select>
+    
+            <div id="paymentDetails"></div>
+    
+            <button id="confirmPayment">確認付款</button>
+            <button class="close-button" id="closePayment">關閉</button>
+        </div>
+    </div>
+    
+    <script>
+        let selectedPlan = ''; // 用來儲存選擇的方案
+
+        document.getElementById('insuranceForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表單默認提交
+
+            // 獲取用戶輸入
+            const name = document.getElementById('name').value;
+            const age = parseInt(document.getElementById('age').value);
+            const carAge = parseInt(document.getElementById('carAge').value);
+            const occupation = document.getElementById('occupation').value;
+            const insuranceType = document.getElementById('insuranceType').value;
+
+            if(age < 18 || age > 70) {
+                alert('年齡必須在18到70之間');
+                return;
+            }
+
+            // 清空之前的方案
+            const plansDiv = document.getElementById('plans');
+            plansDiv.innerHTML = '';
+
+            // 根據用戶輸入生成推薦方案
+            let plansHtml = '';
+            let planPrice = 0;
+            if (insuranceType === 'thirdParty') {
+                if (age < 25) {
+                    plansHtml = `<div class="plan"><strong>方案 A</strong>: 每年 $2,000 (年輕駕駛者專屬)</div>`;
+                    planPrice = 2000;
+                    selectedPlan = '方案 A: 每年 $2,000 (年輕駕駛者專屬)';
+                } else {
+                    plansHtml = `<div class="plan"><strong>方案 B</strong>: 每年 $1,500 (標準第三者責任保險)</div>`;
+                    planPrice = 1500;
+                    selectedPlan = '方案 B: 每年 $1,500 (標準第三者責任保險)';
+                }
+            } else if (insuranceType === 'comprehensive') {
+                if (carAge < 5) {
+                    plansHtml = `<div class="plan"><strong>方案 C</strong>: 每年 $4,000 (新車全面保障)</div>`;
+                    planPrice = 4000;
+                    selectedPlan = '方案 C: 每年 $4,000 (新車全面保障)';
+                } else {
+                    plansHtml = `<div class="plan"><strong>方案 D</strong>: 每年 $3,200 (老車全面保障)</div>`;
+                    planPrice = 3200;
+                    selectedPlan = '方案 D: 每年 $3,200 (老車全面保障)';
+                }
+            } else if (insuranceType === 'partial') {
+                if (occupation === 'driver') {
+                    plansHtml = `<div class="plan"><strong>方案 E</strong>: 每年 $3,000 (專業駕駛者的部分保障)</div>`;
+                    planPrice = 3000;
+                    selectedPlan = '方案 E: 每年 $3,000 (專業駕駛者的部分保障)';
+                } else {
+                    plansHtml = `<div class="plan"><strong>方案 F</strong>: 每年 $2,500 (標準部分保障)</div>`;
+                    planPrice = 2500;
+                    selectedPlan = '方案 F: 每年 $2,500 (標準部分保障)';
+                }
+            }
+
+            // 更新消息和顯示方案
+            document.getElementById('message').innerText = `感謝您，${name}！以下是您選擇的保險方案：`;
+            plansDiv.innerHTML = plansHtml;
+            plansDiv.style.display = 'block'; // 顯示方案
+            document.getElementById('buyButtonContainer').style.display = 'block'; // 顯示購買按鈕
+
+            // 設定購買按鈕的事件
+            document.getElementById('buyButton').onclick = function() {
+                document.getElementById('paymentModal').style.display = 'flex'; // 顯示付款 modal
+            };
+        });
+
+        // 監聽支付方式選擇
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+        const paymentMethod = this.value;
+        const paymentDetailsDiv = document.getElementById('paymentDetails');
+        paymentDetailsDiv.innerHTML = ''; // 清空之前的輸入
+
+        if (paymentMethod === 'creditCard') {
+            paymentDetailsDiv.innerHTML = `
+                <input type="text" placeholder="信用卡號 (16位數字)" required pattern="\\d{16}">
+                <input type="text" placeholder="有效日期 (MM/YY)" required pattern="(0[1-9]|1[0-2])/[0-9]{2}">
+                <input type="text" placeholder="CVV (3位數字)" required pattern="\\d{3}">
+            `;
+        } else if (paymentMethod === 'paypal') {
+            paymentDetailsDiv.innerHTML = `
+                <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$" />   
+            `;
+            // bug location
+
+            
+        } else if (paymentMethod === 'bankTransfer') {
+            paymentDetailsDiv.innerHTML = `
+                <label for="bankName">選擇銀行：</label>
+                <select id="bankName" required>
+                    <option value="">請選擇</option>
+                    <option value="hsbc">匯豐銀行</option>
+                    <option value="standardChartered">渣打銀行</option>
+                    <option value="dbs">星展銀行</option>
+                    <option value="hangSeng">恆生銀行</option>
+                    <option value="bankOfChina">中國銀行</option>
+                </select>
+                <input type="text" id="accountNumber" placeholder="帳戶號碼 (最多 24位數字)" required pattern="\\d{1,24}">
+            `;
+        }
+    });
+
+        // 確認付款
+        document.getElementById('confirmPayment').onclick = function() {
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const paymentDetailsDiv = document.getElementById('paymentDetails');
+            const inputs = paymentDetailsDiv.querySelectorAll('input, select');
+
+            // 檢查是否有必要的付款資料未填寫
+            let allFilled = true;
+            let validFormat = true;
+            inputs.forEach(input => {
+                if (!input.value) {
+                    allFilled = false;
+                }
+                if (!input.checkValidity()) {
+                    validFormat = false;
+                }
+            });
+
+            if (!paymentMethod) {
+                alert('請選擇支付方式。');
+            } else if (!allFilled) {
+                alert('請填寫所有付款資料。');
+            } else if (!validFormat) {
+                alert('請檢查付款資料的格式。');
+            } else {
+                // 購買成功後顯示信息
+                const thankYouSection = document.getElementById('thankYouSection');
+                thankYouSection.innerHTML = `
+                    感謝您，${document.getElementById('name').value}！您已成功購買以下保險方案：<br>
+                    ${selectedPlan}
+                `;
+                thankYouSection.style.display = 'block'; // 顯示感謝信息
+                document.getElementById('paymentModal').style.display = 'none'; // 關閉付款 modal
+                document.getElementById('plans').style.display = 'none'; // 隱藏方案
+                document.getElementById('buyButtonContainer').style.display = 'none'; // 隱藏購買按鈕
+            }
+        };
+
+        // 關閉付款 modal
+        document.getElementById('closePayment').onclick = function() {
+            document.getElementById('paymentModal').style.display = 'none'; // 關閉付款 modal
+        };
+    </script>
+</body>
+</html>
