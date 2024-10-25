@@ -50,7 +50,7 @@ const vehicles = [
         model: 'Aston Martin Valkyrie',
         year: 2017,
         mileage: 0,
-        engine: '6.5 litre Aston Martin-Cosworth RA naturally-aspirated V12',
+        engine: '6.5 litre Aston Martin-V12',
         price: 27194921,
         type: 'sports',
         image: '../images/car5.jpg'
