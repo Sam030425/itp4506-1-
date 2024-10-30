@@ -30,7 +30,7 @@ class Auth {
                     <span class="dropdown-arrow">▼</span> <!-- 下拉箭頭 -->
                 </div>
                 <div class="user-menu">
-                    <a href="profile.html" class="user-menu-item">Profile</a>
+                    <a href="../html/profile.html" class="user-menu-item">Profile</a>
                     <a href="../html/myorder.html" class="user-menu-item">My Orders</a>
                     <button class="logout-btn" onclick="auth.logout()">Logout</button>
                 </div>
