@@ -41,7 +41,7 @@ class ShoppingCart {
         // 檢查是否已登入
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (!currentUser) {
-            window.location.href = 'login.html';
+            window.location.href = '../html/login.html';
             return;
         }
 
@@ -143,7 +143,7 @@ class ShoppingCart {
     checkout() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (!currentUser) {
-        window.location.href = 'login.html';
+        window.location.href = '../html/login.html';
         return;
     }
 
