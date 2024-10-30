@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 case 'Customer':
                     window.location.href = 'vehicledisplay.html';
                     break;
-                case 'VehicleSalesperson':
-                    window.location.href = 'vehiclesales.html';
+                case 'vehicleSalesperson':
+                    window.location.href = '../html/sales.html';
                     break;
                 case 'InsuranceSalesperson':
                     window.location.href = 'insurancesales.html';

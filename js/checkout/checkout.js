@@ -244,18 +244,27 @@ class Checkout {
         const orderData = {
             orderId: this.generateOrderNumber(),
             userId: this.currentUser.email,
+            customerName: this.currentUser.name,          // 添加顧客姓名
+            customerEmail: this.currentUser.email,        // 添加顧客郵箱
+            customerPhone: this.currentUser.phone || 'N/A',  // 添加顧客電話
+            shippingAddress: this.currentUser.address || 'N/A',  // 添加收貨地址
             items: this.cartItems,
             total: this.calculateSubtotal(),
             paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
             status: 'pending',
-            orderDate: new Date().toISOString()
+            orderDate: new Date().toISOString(),
+            statusHistory: [{                             // 添加狀態歷史
+                status: 'created',
+                date: new Date().toISOString(),
+                text: 'Order Created'
+            }]
         };
 
         // 保存訂單到 localStorage
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
         orders.push(orderData);
         localStorage.setItem('orders', JSON.stringify(orders));
-
+    
         // 清空購物車
         localStorage.removeItem('cart');
     }

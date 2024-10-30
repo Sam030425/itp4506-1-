@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Management - Legend Motor</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/sales.css">
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Legend Motor</a>
+            <div class="nav-menu">
+                    <a href="../html/salesprofile.html" class="profile-btn">Profile</a>
+                    <button class="logout-btn" onclick="salesManager.logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="sales-container">
+        <div class="sales-header">
+            <h1>Sales Management</h1>
+        </div>
+
+        <!-- 銷售數據概覽 -->
+        <div class="sales-overview">
+            <div class="overview-card">
+                <h3>Today's Sales</h3>
+                <p class="amount">HK$<span id="todaySales">0</span></p>
+            </div>
+            <div class="overview-card">
+                <h3>Monthly Sales</h3>
+                <p class="amount">HK$<span id="monthlySales">0</span></p>
+            </div>
+            <div class="overview-card">
+                <h3>Pending Orders</h3>
+                <p class="count"><span id="pendingOrders">0</span></p>
+            </div>
+            <div class="overview-card">
+                <h3>Completed Orders</h3>
+                <p class="count"><span id="completedOrders">0</span></p>
+            </div>
+        </div>
+
+        <!-- 訂單管理部分 -->
+        <div class="orders-section">
+            <div class="section-header">
+                <h2>Order Management</h2>
+                <div class="filters">
+                    <select id="statusFilter">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="processing">Processing</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                    <input type="date" id="dateFilter">
+                    <button class="refresh-btn" onclick="refreshOrders()">Refresh</button>
+                </div>
+            </div>
+
+            <div class="orders-table-container">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Vehicle</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <!-- 訂單將由 JavaScript 動態生成 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- 訂單詳情模態窗 -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Order Details</h2>
+            <div id="orderDetails">
+                <!-- 訂單詳情將由 JavaScript 動態生成 -->
+            </div>
+        </div>
+    </div>
+    <script src="../js/login/auth.js"></script>
+    <script src="../js/login/login.js"></script>
+    <script src="../js/sales/sales.js"></script>
+</body>
+</html>
