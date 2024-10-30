@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Legend Motor</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/orders.css">
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Legend Motor</a>
+            <div class="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="vehicledisplay.html">Vehicle Display</a>
+                <a href="insurance.html">Insurance Services</a>
+                <a href="about.html">About Us</a>
+                <div class="user-section">
+                </div>
+                <a href="#" class="cart-icon" onclick="showCart(event)">
+                    🛒 <!-- 購物車圖標 -->
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main class="orders-container">
+        <h1>My Orders</h1>
+        
+        <!-- 訂單篩選 -->
+        <div class="order-filters">
+            <select id="statusFilter">
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+            </select>
+            <div class="date-filters">
+                <input type="date" id="startDate" placeholder="Start Date">
+                <input type="date" id="endDate" placeholder="End Date">
+            </div>
+            <button onclick="resetFilters()" class="reset-btn">Reset Filters</button>
+        </div>
+
+        <!-- 訂單列表 -->
+        <div class="orders-list">
+            <!-- 訂單將由 JavaScript 動態生成 -->
+        </div>
+    </main>
+
+    <!-- 頁腳 -->
+    <footer class="footer">
+        <!-- 頁腳內容 -->
+    </footer>
+    <script src="../js/login/auth.js"></script>
+    <script src="../js/login/login.js"></script>
+    <script src="../js/cart/cart.js"></script>
+    <script src="../js/orders/orders.js"></script>
+</body>
+</html>

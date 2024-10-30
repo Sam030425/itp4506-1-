@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Legend Motor</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Legend Motor</a>
+            <div class="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="vehicledisplay.html">Vehicle Display</a>
+                <a href="insurance.html">Insurance Services</a>
+                <a href="about.html">About Us</a>
+                <div class="user-section">
+                </div>
+                    <a href="#" class="cart-icon" onclick="showCart(event)">
+                        🛒 <!-- 購物車圖標 -->
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main class="profile-container">
+        <div class="profile-header">
+            <h1>My Profile</h1>
+        </div>
+
+        <div class="profile-content">
+            <!-- 側邊欄導航 -->
+            <div class="profile-nav">
+                <button class="nav-item active" data-section="personal-info">
+                    Personal Information
+                </button>
+                <button class="nav-item" data-section="security">
+                    Security Settings
+                </button>
+                <button class="nav-item" data-section="address">
+                    Address Book
+                </button>
+            </div>
+
+            <!-- 個人信息部分 -->
+            <div class="profile-section active" id="personal-info">
+                <h2>Personal Information</h2>
+                <form id="personal-info-form" class="profile-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dateOfBirth">Date of Birth</label>
+                        <input type="date" id="dateOfBirth" name="dateOfBirth">
+                    </div>
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </form>
+            </div>
+
+            <!-- 安全設置部分 -->
+            <div class="profile-section" id="security">
+                <h2>Security Settings</h2>
+                <form id="security-form" class="profile-form">
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" name="currentPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" name="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="save-btn">Update Password</button>
+                </form>
+            </div>
+
+            <!-- 地址簿部分 -->
+            <div class="profile-section" id="address">
+                <h2>Address Book</h2>
+                <div class="addresses-list">
+                    <!-- 地址會由 JavaScript 動態生成 -->
+                </div>
+                <button class="add-address-btn" onclick="profileManager.showAddAddressForm()">
+                    Add New Address
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- 添加地址的模態窗 -->
+    <div id="addressModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Address</h2>
+            <form id="address-form" class="profile-form">
+                <div class="form-group">
+                    <label for="addressName">Address Name</label>
+                    <input type="text" id="addressName" name="addressName" required>
+                </div>
+                <div class="form-group">
+                    <label for="addressLine1">Address Line 1</label>
+                    <input type="text" id="addressLine1" name="addressLine1" required>
+                </div>
+                <div class="form-group">
+                    <label for="addressLine2">Address Line 2</label>
+                    <input type="text" id="addressLine2" name="addressLine2">
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="postalCode">Postal Code</label>
+                    <input type="text" id="postalCode" name="postalCode" required>
+                </div>
+                <button type="submit" class="save-btn">Save Address</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 頁腳 -->
+    <footer class="footer">
+        <!-- 頁腳內容 -->
+    </footer>
+    <script src="../js/login/auth.js"></script>
+    <script src="../js/login/login.js"></script>
+    <script src="../js/cart/cart.js"></script>
+    <script src="../js//profile.js/profile.js"></script>
+</body>
+</html>

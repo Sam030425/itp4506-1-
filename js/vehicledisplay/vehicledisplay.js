@@ -1,4 +1,4 @@
-// 假設這是我們的車輛數據
+// 車輛數據
 const vehicles = [
     {
         id: 1,
@@ -55,13 +55,13 @@ const vehicles = [
         type: 'sports',
         image: '../images/car5.jpg'
     }
-
 ];
 
 // 初始化頁面
 document.addEventListener('DOMContentLoaded', () => {
     initializeFilters();
     updateVehicleDisplay(vehicles);
+    checkLoginStatus();
     
     // 添加初始提示
     const filterSection = document.querySelector('.filter-section');
@@ -69,6 +69,46 @@ document.addEventListener('DOMContentLoaded', () => {
         filterSection.insertAdjacentHTML('afterbegin', '<div class="filter-hint">-</div>');
     }
 });
+
+// 檢查登入狀態
+function checkLoginStatus() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    updateUserInterface(currentUser);
+}
+
+// 更新用戶界面
+function updateUserInterface(currentUser) {
+    const navRight = document.querySelector('.nav-right');
+    if (!navRight) return;
+
+    if (currentUser) {
+        navRight.innerHTML = `
+            <div class="user-section">
+                <div class="user-info">
+                    <span class="user-name">${currentUser.name}</span>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="user-menu">
+                    <a href="profile.html" class="user-menu-item">Profile</a>
+                    <a href="orders.html" class="user-menu-item">Orders</a>
+                    <button onclick="logout()" class="logout-btn">Logout</button>
+                </div>
+            </div>
+            <div class="cart-section">
+                <a href="#" class="cart-icon" onclick="showCart(event)">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        `;
+
+        cart.updateCartCount();
+    } else {
+        navRight.innerHTML = `
+            <a href="login.html" class="login-btn">Login</a>
+        `;
+    }
+}
 
 // 初始化篩選器
 function initializeFilters() {
@@ -84,7 +124,6 @@ function initializeFilters() {
         }
     });
 
-    // 搜尋功能
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
         searchInput.addEventListener('input', filterVehicles);
@@ -95,7 +134,6 @@ function initializeFilters() {
 function updateFilterStatus(filterId) {
     const filter = document.getElementById(filterId);
     if (filter) {
-        const selectedOption = filter.options[filter.selectedIndex].text;
         filter.style.borderColor = filter.value === 'all' ? '#ddd' : '#4CAF50';
     }
 }
@@ -113,12 +151,10 @@ function filterVehicles() {
         let matchesType = true;
         let matchesSearch = true;
 
-        // 品牌篩選
         if (brandFilter && brandFilter !== 'all') {
             matchesBrand = vehicle.brand === brandFilter;
         }
 
-        // 價格範圍篩選
         if (priceFilter && priceFilter !== 'all') {
             switch (priceFilter) {
                 case 'under300':
@@ -133,12 +169,10 @@ function filterVehicles() {
             }
         }
 
-        // 車型篩選
         if (typeFilter && typeFilter !== 'all') {
             matchesType = vehicle.type === typeFilter;
         }
 
-        // 搜尋詞篩選
         if (searchTerm) {
             matchesSearch = vehicle.model.toLowerCase().includes(searchTerm) ||
                            vehicle.brand.toLowerCase().includes(searchTerm);
@@ -185,7 +219,6 @@ function updateVehicleDisplay(vehicles) {
         `).join('');
     }
 
-    // 如果網格還沒有被添加到頁面中，則添加它
     const showcase = document.querySelector('.vehicle-showcase');
     if (showcase && !document.querySelector('.vehicles-grid')) {
         showcase.appendChild(vehiclesGrid);
@@ -196,6 +229,22 @@ function updateVehicleDisplay(vehicles) {
 function showVehicleDetails(vehicleId) {
     const vehicle = vehicles.find(v => v.id === vehicleId);
     if (vehicle) {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        
+        let actionButtons = '';
+        if (currentUser && currentUser.userType && currentUser.userType.toLowerCase() === 'customer') {
+            actionButtons = `
+                <div class="action-buttons">
+                    <button onclick="handleAddToCart(${vehicle.id})" class="cart-button">Add to Cart</button>
+                    <button onclick="handleBuyNow(${vehicle.id})" class="buy-button">Buy Now</button>
+                </div>
+            `;
+        } else if (currentUser && currentUser.userType && currentUser.userType.toLowerCase() !== 'customer') {
+            actionButtons = `<p class="notice">Only customers can make purchases</p>`;
+        } else {
+            actionButtons = `<a href="../html/login.html" class="buy-button">Login to Purchase</a>`;
+        }
+
         const modalHtml = `
             <div id="vehicleModal" class="modal">
                 <div class="modal-content">
@@ -219,27 +268,24 @@ function showVehicleDetails(vehicleId) {
                             <p>Engine：${vehicle.engine}</p>
                             <p>Type：${vehicle.type.toUpperCase()}</p>
                             <div class="price-tag">Price：HK$${vehicle.price.toLocaleString()}</div>
+                            ${actionButtons}
                         </div>
                     </div>
                 </div>
             </div>
         `;
 
-        // 添加彈出視窗到頁面
         document.body.insertAdjacentHTML('beforeend', modalHtml);
 
         const modal = document.getElementById('vehicleModal');
         const closeButton = modal.querySelector('.close-button');
 
-        // 顯示彈出視窗
         modal.style.display = 'block';
 
-        // 關閉按鈕點擊事件
         closeButton.onclick = function() {
             modal.remove();
         }
 
-        // 點擊彈出視窗外部區域關閉
         window.onclick = function(event) {
             if (event.target === modal) {
                 modal.remove();
@@ -248,26 +294,94 @@ function showVehicleDetails(vehicleId) {
     }
 }
 
-// 格式化價格
-function formatPrice(price) {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// 處理加入購物車
+function handleAddToCart(vehicleId) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!currentUser) {
+        window.location.href = '../html/login.html';
+        return;
+    }
+
+    if (currentUser.userType.toLowerCase() !== 'customer') {
+        showMessage('Only customers can make purchases', 'error');
+        return;
+    }
+
+    const vehicle = vehicles.find(v => v.id === vehicleId);
+    if (vehicle) {
+        cart.addItem(vehicle);
+        const modal = document.getElementById('vehicleModal');
+        if (modal) {
+            modal.remove();
+        }
+    }
 }
 
-// 排序功能
-function sortVehicles(sortBy) {
-    let sortedVehicles = [...vehicles];
-    switch(sortBy) {
-        case 'price-asc':
-            sortedVehicles.sort((a, b) => a.price - b.price);
-            break;
-        case 'price-desc':
-            sortedVehicles.sort((a, b) => b.price - a.price);
-            break;
-        case 'year-desc':
-            sortedVehicles.sort((a, b) => b.year - a.year);
-            break;
+// 處理立即購買
+function handleBuyNow(vehicleId) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if (!currentUser) {
+        window.location.href = '../html/login.html';
+        return;
     }
-    updateVehicleDisplay(sortedVehicles);
+
+    if (currentUser.userType.toLowerCase() !== 'customer') {
+        showMessage('Only customers can make purchases', 'error');
+        return;
+    }
+
+    const vehicle = vehicles.find(v => v.id === vehicleId);
+    if (vehicle) {
+        cart.items = [];
+        cart.addItem(vehicle);
+        window.location.href = 'checkout.html';
+    }
+}
+
+// 顯示消息提示
+function showMessage(message, type = 'info') {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${type}`;
+    messageDiv.textContent = message;
+    
+    messageDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 25px;
+        border-radius: 4px;
+        color: white;
+        z-index: 1000;
+        animation: slideIn 0.5s ease-out;
+    `;
+
+    switch(type) {
+        case 'success':
+            messageDiv.style.backgroundColor = '#28a745';
+            break;
+        case 'warning':
+            messageDiv.style.backgroundColor = '#ffc107';
+            break;
+        case 'error':
+            messageDiv.style.backgroundColor = '#dc3545';
+            break;
+        default:
+            messageDiv.style.backgroundColor = '#17a2b8';
+    }
+
+    document.body.appendChild(messageDiv);
+
+    setTimeout(() => {
+        messageDiv.remove();
+    }, 3000);
+}
+
+// 登出函數
+function logout() {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('cart');
+    window.location.href = 'login.html';
 }
 
 // 重置所有篩選器
@@ -290,7 +404,7 @@ function resetFilters() {
     updateVehicleDisplay(vehicles);
 }
 
-// 添加錯誤處理
+// 錯誤處理
 window.onerror = function(msg, url, lineNo, columnNo, error) {
     console.error('錯誤: ' + msg + '\n網址: ' + url + '\n行號: ' + lineNo + '\n列號: ' + columnNo + '\n錯誤物件: ' + error);
     return false;
