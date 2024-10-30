@@ -8,7 +8,7 @@ class Checkout {
     initCheckout() {
         // 檢查用戶是否登入
         if (!this.currentUser) {
-            window.location.href = 'login.html';
+            window.location.href = '../html/login.html';
             return;
         }
         // 檢查購物車是否為空
