@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 case 'vehicleSalesperson':
                     window.location.href = '../html/sales.html';
                     break;
-                case 'InsuranceSalesperson':
-                    window.location.href = 'insurancesales.html';
+                case 'insuranceSalesperson':
+                    window.location.href = '../html/insurance.html';
                     break;
                 default:
                     window.location.href = '../html/index.html';

@@ -335,7 +335,7 @@ function handleBuyNow(vehicleId) {
     if (vehicle) {
         cart.items = [];
         cart.addItem(vehicle);
-        window.location.href = 'checkout.html';
+        window.location.href = '../html/checkout.html';
     }
 }
 

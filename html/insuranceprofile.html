@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Agent Profile - Legend Motor</title>
+    <link rel="stylesheet" href="../css/insuranceprofile.css">
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Legend Motor</a>
+            <div class="nav-right">
+                <a href="insurance.html" class="action-btn">Management</a>
+                <button class="logout-btn" onclick="insuranceProfile.logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容區域 -->
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>Insurance Agent Profile</h1>
+        </div>
+
+        <div class="profile-content">
+            <!-- 個人資料卡片 -->
+            <div class="profile-card">
+                <div class="basic-info">
+                    <h2 id="agentName">Loading...</h2>
+                    <p id="agentEmail">Email: Loading...</p>
+                </div>
+                <div class="performance-summary">
+                    <div class="stat-item">
+                        <span class="stat-label">Monthly Premium</span>
+                        <span class="stat-value" id="monthlyPremium">HK$0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Active Policies</span>
+                        <span class="stat-value" id="activePolicies">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 詳細信息區域 -->
+            <div class="profile-details">
+                <!-- 個人信息表單 -->
+                <section class="detail-section">
+                    <h3>Personal Information</h3>
+                    <form id="personalInfoForm" class="profile-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="licenseNumber">Insurance License Number</label>
+                            <input type="text" id="licenseNumber" name="licenseNumber" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="specialization">Specialization</label>
+                            <input type="text" id="specialization" name="specialization" readonly>
+                        </div>
+                        <button type="submit" class="save-btn">Save Changes</button>
+                    </form>
+                </section>
+
+                <!-- 績效指標 -->
+                <section class="detail-section">
+                    <h3>Performance Metrics</h3>
+                    <div class="performance-metrics">
+                        <div class="metric-card">
+                            <h4>Current Month</h4>
+                            <p class="metric-value" id="currentMonthPremium">HK$0</p>
+                            <p class="metric-label">Total Premium</p>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Success Rate</h4>
+                            <p class="metric-value" id="approvalRate">0%</p>
+                            <p class="metric-label">Policy Approval Rate</p>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Client Satisfaction</h4>
+                            <p class="metric-value" id="satisfaction">N/A</p>
+                            <p class="metric-label">Average Rating</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 近期活動 -->
+                <section class="detail-section">
+                    <h3>Recent Activities</h3>
+                    <div class="activity-list" id="activityList">
+                        <!-- 動態填充活動記錄 -->
+                    </div>
+                </section>
+
+                <!-- 安全設定 -->
+                <section class="detail-section">
+                    <h3>Security Settings</h3>
+                    <form id="securityForm" class="profile-form">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" id="newPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="save-btn">Update Password</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script src="../js/login/auth.js"></script>
+    <script src="../js/login/login.js"></script>
+    <script src="../js/profile.js/insuranceprofile.js"></script>
+</body>
+</html>
