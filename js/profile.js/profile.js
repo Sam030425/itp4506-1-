@@ -16,13 +16,13 @@ class ProfileManager {
     }
 
     loadUserData() {
-        // 加載個人信息
+ 
         document.getElementById('name').value = this.currentUser.name || '';
         document.getElementById('email').value = this.currentUser.email || '';
         document.getElementById('phone').value = this.currentUser.phone || '';
         document.getElementById('dateOfBirth').value = this.currentUser.dateOfBirth || '';
 
-        // 加載地址
+
         this.loadAddresses();
     }
 
@@ -30,13 +30,13 @@ class ProfileManager {
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
             item.addEventListener('click', () => {
-                // 移除所有活動狀態
+    
                 navItems.forEach(nav => nav.classList.remove('active'));
                 document.querySelectorAll('.profile-section').forEach(section => {
                     section.classList.remove('active');
                 });
 
-                // 添加新的活動狀態
+         
                 item.classList.add('active');
                 const sectionId = item.getAttribute('data-section');
                 document.getElementById(sectionId).classList.add('active');
@@ -45,7 +45,7 @@ class ProfileManager {
     }
 
     attachEventListeners() {
-        // 個人信息表單
+
         const personalInfoForm = document.getElementById('personal-info-form');
         if (personalInfoForm) {
             personalInfoForm.addEventListener('submit', (e) => {
@@ -54,7 +54,7 @@ class ProfileManager {
             });
         }
 
-        // 安全設置表單
+
         const securityForm = document.getElementById('security-form');
         if (securityForm) {
             securityForm.addEventListener('submit', (e) => {
@@ -63,7 +63,7 @@ class ProfileManager {
             });
         }
 
-        // 地址表單
+  
         const addressForm = document.getElementById('address-form');
         if (addressForm) {
             addressForm.addEventListener('submit', (e) => {
@@ -78,15 +78,14 @@ class ProfileManager {
         const phone = document.getElementById('phone').value;
         const dateOfBirth = document.getElementById('dateOfBirth').value;
 
-        // 更新用戶數據
         this.currentUser.name = name;
         this.currentUser.phone = phone;
         this.currentUser.dateOfBirth = dateOfBirth;
 
-        // 更新 localStorage
+   
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
 
-        // 更新用戶列表中的用戶數據
+     
         let users = JSON.parse(localStorage.getItem('users')) || [];
         users = users.map(user => {
             if (user.email === this.currentUser.email) {
@@ -104,23 +103,23 @@ class ProfileManager {
         const newPassword = document.getElementById('newPassword').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
 
-        // 驗證當前密碼
+
         if (currentPassword !== this.currentUser.password) {
             this.showMessage('Current password is incorrect', 'error');
             return;
         }
 
-        // 驗證新密碼
+
         if (newPassword !== confirmPassword) {
             this.showMessage('New passwords do not match', 'error');
             return;
         }
 
-        // 更新密碼
+
         this.currentUser.password = newPassword;
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
 
-        // 更新用戶列表中的密碼
+
         let users = JSON.parse(localStorage.getItem('users')) || [];
         users = users.map(user => {
             if (user.email === this.currentUser.email) {
@@ -130,7 +129,7 @@ class ProfileManager {
         });
         localStorage.setItem('users', JSON.stringify(users));
 
-        // 清空表單
+
         document.getElementById('security-form').reset();
         this.showMessage('Password updated successfully');
     }
@@ -170,13 +169,13 @@ class ProfileManager {
         const modal = document.getElementById('addressModal');
         modal.style.display = 'block';
 
-        // 關閉按鈕事件
+
         const closeBtn = modal.querySelector('.close');
         closeBtn.onclick = () => {
             modal.style.display = 'none';
         };
 
-        // 點擊模態窗外部關閉
+
         window.onclick = (event) => {
             if (event.target === modal) {
                 modal.style.display = 'none';
@@ -199,21 +198,20 @@ class ProfileManager {
             postalCode
         };
 
-        // 獲取現有地址或創建新數組
         this.currentUser.addresses = this.currentUser.addresses || [];
 
         if (index !== null) {
-            // 編輯現有地址
+     
             this.currentUser.addresses[index] = newAddress;
         } else {
-            // 添加新地址
+      
             this.currentUser.addresses.push(newAddress);
         }
 
-        // 更新存儲
+
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
 
-        // 更新用戶列表
+  
         let users = JSON.parse(localStorage.getItem('users')) || [];
         users = users.map(user => {
             if (user.email === this.currentUser.email) {
@@ -223,7 +221,7 @@ class ProfileManager {
         });
         localStorage.setItem('users', JSON.stringify(users));
 
-        // 關閉模態窗並重新加載地址
+    
         document.getElementById('addressModal').style.display = 'none';
         document.getElementById('address-form').reset();
         this.loadAddresses();
@@ -233,17 +231,17 @@ class ProfileManager {
     editAddress(index) {
         const address = this.currentUser.addresses[index];
         
-        // 填充表單
+     
         document.getElementById('addressName').value = address.name;
         document.getElementById('addressLine1').value = address.line1;
         document.getElementById('addressLine2').value = address.line2 || '';
         document.getElementById('city').value = address.city;
         document.getElementById('postalCode').value = address.postalCode;
 
-        // 顯示模態窗
+  
         this.showAddAddressForm();
 
-        // 修改表單提交處理
+
         const form = document.getElementById('address-form');
         form.onsubmit = (e) => {
             e.preventDefault();
@@ -256,7 +254,7 @@ class ProfileManager {
             this.currentUser.addresses.splice(index, 1);
             localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
 
-            // 更新用戶列表
+      
             let users = JSON.parse(localStorage.getItem('users')) || [];
             users = users.map(user => {
                 if (user.email === this.currentUser.email) {
@@ -306,5 +304,5 @@ class ProfileManager {
     }
 }
 
-// 創建 ProfileManager 實例
+
 const profileManager = new ProfileManager();

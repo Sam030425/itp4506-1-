@@ -6,7 +6,7 @@ class SalesManager {
     }
 
     init() {
-        // 檢查用戶權限
+   
         if (!this.currentUser || this.currentUser.userType !== 'vehicleSalesperson') {
             this.showMessage('Access denied. Only Vehicle Salesperson can access this page.', 'error');
             setTimeout(() => {
@@ -22,7 +22,7 @@ class SalesManager {
     }
 
     loadSalesOverview() {
-        // 只計算當前銷售人員的數據
+
         const today = new Date().toDateString();
         const todaySales = this.orders
             .filter(order => 
@@ -64,7 +64,7 @@ class SalesManager {
         const statusFilter = document.getElementById('statusFilter').value;
         const dateFilter = document.getElementById('dateFilter').value;
 
-        // 只獲取相關訂單
+   
         let filteredOrders = this.orders.filter(order => 
             order.salesPersonId === this.currentUser.id ||
             !order.salesPersonId
@@ -334,12 +334,12 @@ class SalesManager {
 
     logout() {
         if (confirm('Are you sure you want to logout?')) {
-            // 清除當前用戶信息
+       
             localStorage.removeItem('currentUser');
-            // 重定向到登入頁面
+        
             window.location.href = 'login.html';
             
-            // 顯示登出成功消息
+      
             this.showMessage('Logout successful', 'success');
         }
     }
@@ -392,5 +392,5 @@ class SalesManager {
     }
 }
 
-// 創建銷售管理器實例
+
 const salesManager = new SalesManager();

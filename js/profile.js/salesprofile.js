@@ -168,13 +168,13 @@ class SalesProfile {
 
     logout() {
         if (confirm('Are you sure you want to logout?')) {
-            // 清除當前用戶信息
+
             localStorage.removeItem('currentUser');
             
-            // 顯示登出成功消息
+
             this.showMessage('Logout successful', 'success');
             
-            // 重定向到登入頁面
+     
             setTimeout(() => {
                 window.location.href = 'login.html';
             }, 1000);

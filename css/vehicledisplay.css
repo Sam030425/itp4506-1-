@@ -4,6 +4,8 @@
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+
+    
 }
 
 .filter-section {
@@ -55,12 +57,11 @@
 .vehicles-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /* 減少間距 */
     gap: 1.5rem;
-    /* 增加最大寬度 */
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 1rem;
+    
 }
 
 .vehicle-card {
@@ -69,7 +70,6 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     overflow: hidden;
     transition: transform 0.3s;
-    /* 增加最小寬度 */
     min-width: 320px;
 }
 
@@ -79,7 +79,7 @@
 
 .vehicle-image {
     width: 100%;
-    height: 240px; /* 固定高度 */
+    height: 240px; 
     position: relative;
     overflow: hidden;
 }
@@ -87,7 +87,7 @@
 .vehicle-image img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 確保圖片填滿容器且保持比例 */
+    object-fit: contain; 
     position: absolute;
     top: 0;
     left: 0;
@@ -95,7 +95,7 @@
 }
 
 .vehicle-image:hover img {
-    transform: scale(1.05); /* 懸停時輕微放大效果 */
+    transform: scale(1.05); 
 }
 
 .vehicle-image div {
@@ -108,7 +108,6 @@
     align-items: center;
     justify-content: center;
     color: #666;
-    /* 增加文字大小 */
     font-size: 1.2rem;
 }
 
@@ -182,7 +181,7 @@
     position: relative;
     background-color: #fff;
     margin: 5% auto;
-    padding: 10px; /* 增加內邊距 */
+    padding: 10px; 
     width: 80%;
     max-width: 800px;
     border-radius: 8px;
@@ -206,7 +205,7 @@
 }
 
 .modal-header {
-    margin-bottom: 30px; /* 增加下方間距 */
+    margin-bottom: 30px; 
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
 }
@@ -214,8 +213,8 @@
 .modal-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 30px; /* 增加間距 */
-    padding-top: 20px; /* 添加上方間距 */
+    gap: 30px; 
+    padding-top: 20px; 
 }
 
 .modal-image {
@@ -227,18 +226,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px; /* 添加上方間距 */
+    margin-top: 20px; 
 }
 
 .modal-image img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 改為 contain 以保持圖片比例 */
+    object-fit: contain; 
 }
 
 .vehicle-details {
     padding: 20px;
-    margin-top: 20px; /* 添加上方間距 */
+    margin-top: 20px; 
 }
 
 .vehicle-details h3 {
@@ -270,7 +269,7 @@ a.buy-button {
     cursor: pointer;
     font-size: 1rem;
     text-align: center;
-    text-decoration: none;  /* 移除鏈接下劃線 */
+    text-decoration: none; 
     display: inline-block;
 }
 
@@ -312,7 +311,7 @@ a.buy-button {
     }
 }
 
-/* 購物車圖標樣式 */
+
 .cart-section {
     position: relative;
     margin-left: 20px;
@@ -339,7 +338,7 @@ a.buy-button {
     text-align: center;
 }
 
-/* 購物車彈出視窗樣式 */
+
 .cart-modal {
     display: none;
     position: fixed;
@@ -464,7 +463,7 @@ a.buy-button {
     color: #666;
 }
 
-/* 用戶選單樣式 */
+
 .user-section {
     position: relative;
     display: inline-block;
@@ -531,7 +530,7 @@ a.buy-button {
     background-color: #c82333;
 }
 
-/* 登入按鈕樣式 */
+
 .login-btn {
     padding: 8px 15px;
     background-color: #007bff;
@@ -544,3 +543,24 @@ a.buy-button {
 .login-btn:hover {
     background-color: #0056b3;
 }
+
+.bg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: bgSlide 30s linear infinite;
+}
+

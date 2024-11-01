@@ -3,25 +3,23 @@ class Checkout {
         this.cartItems = JSON.parse(localStorage.getItem('cart')) || [];
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.baseInsurance = 5000;
-        this.policyId = null; // 添加保單ID屬性
-        this.orderId = null; // 添加訂單ID屬性
+        this.policyId = null; 
+        this.orderId = null; 
         this.initCheckout();
     }
 
     initCheckout() {
         try {
-            // 檢查用戶是否登入
             if (!this.currentUser) {
                 window.location.href = '../html/login.html';
                 return;
             }
-            // 檢查購物車是否為空
             if (this.cartItems.length === 0) {
                 window.location.href = 'vehicledisplay.html';
                 return;
             }
 
-            // 生成訂單和保單ID
+            
             this.orderId = this.generateOrderNumber();
             this.policyId = this.generatePolicyNumber();
 
@@ -247,17 +245,17 @@ class Checkout {
     calculateInsurance() {
         let totalDiscount = 0;
         
-        // 獲取用戶輸入的年齡
+    
         const ageInput = document.getElementById('userAge');
         const userAge = ageInput ? parseInt(ageInput.value) : 0;
         
-        // 年齡折扣計算
+        
         let ageDiscount = 0;
         if (userAge >= 30 && userAge <= 40) {
             ageDiscount = this.baseInsurance * 0.10;
             totalDiscount += ageDiscount;
             
-            // 更新年齡折扣顯示
+           
             const ageDiscountLine = document.querySelector('.age-discount-line');
             if (ageDiscountLine) {
                 ageDiscountLine.classList.add('active');
@@ -271,21 +269,21 @@ class Checkout {
             }
         }
 
-        // 檢查其他保險選項
+      
         const accidentFreeChecked = document.getElementById('accidentFree')?.checked ?? false;
         const safetySystemChecked = document.getElementById('safetySystem')?.checked ?? false;
 
-        // 無事故記錄折扣
+    
         if (accidentFreeChecked) {
             totalDiscount += this.baseInsurance * 0.15;
         }
 
-        // 安全裝置折扣
+       
         if (safetySystemChecked) {
             totalDiscount += this.baseInsurance * 0.05;
         }
 
-        // 計算最終保費
+       
         const finalInsurance = this.baseInsurance - totalDiscount;
         return Math.max(finalInsurance, 0);
     }
@@ -298,13 +296,13 @@ class Checkout {
         const subtotal = this.calculateSubtotal();
         let taxRate;
         if (subtotal <= 150000) {
-            taxRate = 0.4; // 40%
+            taxRate = 0.4; 
         } else if (subtotal <= 300000) {
-            taxRate = 0.75; // 75%
+            taxRate = 0.75;
         } else if (subtotal <= 500000) {
-            taxRate = 1.0; // 100%
+            taxRate = 1.0; 
         } else {
-            taxRate = 1.15; // 115%
+            taxRate = 1.15;
         }
         return subtotal * taxRate;
     }
@@ -324,7 +322,7 @@ class Checkout {
             endDate: endDate.toISOString(),
             createdDate: new Date().toISOString(),
             
-            // 客戶信息
+            
             clientName: this.currentUser.name,
             clientId: this.currentUser.id || this.currentUser.email,
             clientEmail: this.currentUser.email,
@@ -332,13 +330,13 @@ class Checkout {
             driverLicense: document.getElementById('driverLicense').value,
             driverAge: parseInt(document.getElementById('userAge').value),
             
-            // 車輛信息
+            
             vehicleModel: vehicle.model,
             vehicleYear: vehicle.year,
             vehicleRegistration: vehicle.registration || 'New Vehicle',
             vehicleValue: vehicle.price,
             
-            // 保險詳情
+           
             insuranceDetails: {
                 driverAge: parseInt(document.getElementById('userAge').value),
                 accidentFree: document.getElementById('accidentFree').checked,
@@ -348,7 +346,7 @@ class Checkout {
                 finalPremium: this.calculateInsurance()
             },
             
-            // 保障範圍
+            
             coverage: [
                 {
                     name: "Third Party Liability",
@@ -362,10 +360,10 @@ class Checkout {
                 }
             ],
 
-            // 關聯訂單
+            
             orderId: this.orderId,
             
-            // 歷史記錄
+            
             history: [{
                 date: new Date().toISOString(),
                 action: "Policy Created",
@@ -373,7 +371,7 @@ class Checkout {
             }]
         };
 
-        // 保存保單
+        
         let policies = JSON.parse(localStorage.getItem('policies')) || [];
         policies.push(policyData);
         localStorage.setItem('policies', JSON.stringify(policies));
@@ -411,15 +409,15 @@ class Checkout {
             }]
         };
 
-        // 保存訂單
+        
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
         orders.push(orderData);
         localStorage.setItem('orders', JSON.stringify(orders));
 
-        // 創建和保存保單
+        
         this.createInsurancePolicy();
 
-        // 清空購物車
+        
         localStorage.removeItem('cart');
     }
 
@@ -589,5 +587,5 @@ class Checkout {
     }
 }
 
-// 創建結帳實例
+
 const checkout = new Checkout();

@@ -1,4 +1,4 @@
-/* 基礎設置 */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +6,7 @@
     font-family: "Microsoft JhengHei", sans-serif;
 }
 
-/* 導航欄樣式 */
+
 .navbar {
     background-color: #333;
     padding: 1rem;
@@ -69,14 +69,14 @@
     transform: translateY(-2px);
 }
 
-/* 主容器樣式 */
+
 .insurance-container {
     max-width: 1400px;
     margin: 100px auto 40px;
     padding: 0 20px;
 }
 
-/* 頁面標題 */
+
 .insurance-header {
     margin-bottom: 30px;
 }
@@ -92,7 +92,7 @@
     margin: 0;
 }
 
-/* 概覽卡片樣式 */
+
 .insurance-overview {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -132,7 +132,7 @@
     margin: 0;
 }
 
-/* 保單管理區域樣式 */
+
 .policies-section {
     background: white;
     padding: 20px;
@@ -154,7 +154,7 @@
     margin: 0;
 }
 
-/* 篩選器樣式 */
+
 .filters {
     display: flex;
     gap: 15px;
@@ -185,7 +185,7 @@
     background: #5a6268;
 }
 
-/* 保單表格樣式 */
+
 .policies-table-container {
     overflow-x: auto;
 }
@@ -213,7 +213,7 @@
     background: #f8f9fa;
 }
 
-/* 狀態標籤樣式 */
+
 .status-badge {
     padding: 6px 12px;
     border-radius: 12px;
@@ -251,7 +251,7 @@
     color: #721c24;
 }
 
-/* 操作按鈕樣式 */
+
 .action-btn {
     padding: 6px 12px;
     border: none;
@@ -289,7 +289,7 @@
     background: #c82333;
 }
 
-/* 模態框樣式 */
+
 .modal {
     display: none;
     position: fixed;
@@ -327,7 +327,7 @@
     color: #333;
 }
 
-/* 響應式設計 */
+
 @media (max-width: 1200px) {
     .insurance-overview {
         grid-template-columns: repeat(2, 1fr);
@@ -365,7 +365,7 @@
     }
 }
 
-/* 消息提示樣式 */
+
 .message {
     position: fixed;
     top: 20px;
@@ -389,7 +389,7 @@
     }
 }
 
-/* 列印樣式優化 */
+
 @media print {
     .navbar,
     .filters,
@@ -407,3 +407,4 @@
         break-inside: avoid;
     }
 }
+

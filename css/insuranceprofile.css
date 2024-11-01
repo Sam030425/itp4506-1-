@@ -1,4 +1,4 @@
-/* 基礎設置 */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,14 +6,14 @@
     font-family: "Microsoft JhengHei", sans-serif;
 }
 
-/* 主容器樣式 */
+
 .profile-container {
     max-width: 1200px;
     margin: 100px auto 40px;
     padding: 0 20px;
 }
 
-/* 導航欄樣式 */
+
 .navbar {
     background-color: #333;
     padding: 1rem;
@@ -39,14 +39,14 @@
     font-weight: bold;
 }
 
-/* 導航欄右側樣式 */
+
 .nav-right {
     display: flex;
     gap: 15px;
     align-items: center;
 }
 
-/* 統一按鈕樣式 */
+
 .nav-right .action-btn,
 .nav-right .logout-btn {
     padding: 8px 16px;
@@ -62,7 +62,7 @@
     justify-content: center;
 }
 
-/* 管理按鈕樣式 */
+
 .nav-right .action-btn {
     background: #4285f4;
     color: white;
@@ -73,7 +73,7 @@
     transform: translateY(-2px);
 }
 
-/* 登出按鈕樣式 */
+
 .nav-right .logout-btn {
     background: #dc3545;
     color: white;
@@ -94,14 +94,14 @@
     color: #333;
 }
 
-/* 內容布局 */
+
 .profile-content {
     display: grid;
     grid-template-columns: 300px 1fr;
     gap: 30px;
 }
 
-/* 個人資料卡片樣式 */
+
 .profile-card {
     background: white;
     border-radius: 8px;
@@ -151,14 +151,13 @@
     color: #007bff;
 }
 
-/* 詳細信息區域樣式 */
 .profile-details {
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
-/* 詳細部分樣式 */
+
 .detail-section {
     background: white;
     padding: 25px;
@@ -173,7 +172,7 @@
     border-bottom: 2px solid #f0f0f0;
 }
 
-/* 表單樣式 */
+
 .profile-form {
     display: grid;
     gap: 20px;
@@ -225,7 +224,7 @@
     transform: translateY(-2px);
 }
 
-/* 績效指標樣式 */
+
 .performance-metrics {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -261,7 +260,7 @@
     font-size: 0.9rem;
 }
 
-/* 活動列表樣式 */
+
 .activity-list {
     display: flex;
     flex-direction: column;
@@ -309,7 +308,7 @@
     font-size: 0.9rem;
 }
 
-/* 安全設定樣式 */
+
 .security-section input[type="password"] {
     padding: 10px;
     border: 1px solid #ddd;
@@ -318,7 +317,7 @@
     margin-bottom: 15px;
 }
 
-/* 消息提示樣式 */
+
 .message {
     position: fixed;
     top: 20px;
@@ -342,7 +341,7 @@
     }
 }
 
-/* 響應式設計 */
+
 @media (max-width: 992px) {
     .profile-content {
         grid-template-columns: 1fr;
@@ -392,7 +391,7 @@
     }
 }
 
-/* 列印樣式優化 */
+
 @media print {
     .navbar,
     .nav-right,

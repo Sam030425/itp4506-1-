@@ -1,4 +1,5 @@
-/* 主容器樣式 */
+
+
 .sales-container {
     max-width: 1400px;
     margin: 100px auto 40px;
@@ -10,7 +11,7 @@
     color: #333;
 }
 
-/* 銷售概覽卡片樣式 */
+
 .sales-overview {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -45,7 +46,6 @@
     margin: 0;
 }
 
-/* 訂單管理部分樣式 */
 .orders-section {
     background: white;
     padding: 20px;
@@ -82,7 +82,7 @@
     cursor: pointer;
 }
 
-/* 訂單表格樣式 */
+
 .orders-table-container {
     overflow-x: auto;
 }
@@ -104,7 +104,7 @@
     font-weight: 600;
 }
 
-/* 狀態標籤樣式 */
+
 .status-badge {
     padding: 4px 8px;
     border-radius: 12px;
@@ -131,7 +131,7 @@
     color: white;
 }
 
-/* 操作按鈕樣式 */
+
 .action-btn {
     padding: 6px 12px;
     border: none;
@@ -155,7 +155,7 @@
     color: white;
 }
 
-/* 訂單詳情模態窗樣式 */
+
 .modal {
     display: none;
     position: fixed;
@@ -188,7 +188,7 @@
     color: #666;
 }
 
-/* 訂單詳情樣式 */
+
 .order-details {
     padding: 20px;
     background: white;
@@ -213,7 +213,7 @@
     min-width: 150px;
 }
 
-/* 訂單商品列表樣式 */
+
 .order-items {
     margin: 20px 0;
     padding: 20px;
@@ -226,7 +226,7 @@
     color: #333;
 }
 
-/* 單個訂單商品樣式 */
+
 .order-item {
     display: flex;
     align-items: center;
@@ -265,7 +265,7 @@
     font-weight: 500;
 }
 
-/* 客戶信息區域樣式 */
+
 .customer-info {
     margin: 20px 0;
     padding: 20px;
@@ -278,7 +278,7 @@
     color: #333;
 }
 
-/* 訂單總金額樣式 */
+
 .order-total {
     display: flex;
     justify-content: space-between;
@@ -295,7 +295,7 @@
     font-weight: bold;
 }
 
-/* 訂單狀態歷史樣式 */
+
 .status-history {
     margin: 20px 0;
 }
@@ -345,7 +345,7 @@
     color: #666;
 }
 
-/* 操作按鈕區域樣式 */
+
 .order-actions {
     display: flex;
     gap: 10px;
@@ -366,7 +366,6 @@
 
 
 
-/* 消息提示樣式 */
 .message {
     position: fixed;
     top: 20px;
@@ -378,7 +377,7 @@
     animation: slideIn 0.5s ease-out;
 }
 
-/* 修改 sales-header 樣式 */
+
 .sales-header {
     margin-bottom: 30px;
 }
@@ -394,7 +393,7 @@
     margin: 0;
 }
 
-/* 新增個人資料按鈕樣式 */
+
 .profile-btn {
     background: #4285f4;
     color: white;
@@ -411,7 +410,7 @@
 }
 
 
-/* 在響應式設計中添加 */
+
 @media (max-width: 768px) {
     .header-content {
         flex-direction: column;
@@ -436,7 +435,7 @@
     }
 }
 
-/* 響應式設計 */
+
 @media (max-width: 1200px) {
     .sales-overview {
         grid-template-columns: repeat(2, 1fr);
@@ -499,7 +498,7 @@
     background: #c82333;
 }
 
-/* 在響應式設計中添加 */
+
 @media (max-width: 768px) {
     .nav-right {
         flex-direction: column;

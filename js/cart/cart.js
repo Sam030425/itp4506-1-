@@ -9,7 +9,7 @@ class ShoppingCart {
         this.createCartModal();
     }
 
-    // 在 cart.js 中修改 createCartModal 方法
+    
     createCartModal() {
         const modalHTML = `
             <div class="cart-modal">
@@ -38,21 +38,20 @@ class ShoppingCart {
     }
 
     addItem(vehicle) {
-        // 檢查是否已登入
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (!currentUser) {
             window.location.href = '../html/login.html';
             return;
         }
 
-        // 檢查車輛是否已在購物車中
+        
         const existingItem = this.items.find(item => item.id === vehicle.id);
         if (existingItem) {
             alert('This vehicle is already in your cart!');
             return;
         }
 
-        // 添加到購物車
+        
         this.items.push({
             id: vehicle.id,
             model: vehicle.model,
@@ -61,12 +60,12 @@ class ShoppingCart {
             timestamp: new Date().toISOString()
         });
 
-        // 更新本地存儲和UI
+        
         this.saveCart();
         this.updateCartCount();
         this.updateCartDisplay();
         
-        // 顯示成功消息
+    
         this.showMessage('Vehicle added to cart successfully!');
     }
 
@@ -84,7 +83,7 @@ class ShoppingCart {
         }
     }
 
-    // 在 cart.js 中修改 updateCartDisplay 方法
+    
     updateCartDisplay() {
         const cartItems = document.querySelector('.cart-items');
         if (!cartItems) return;
@@ -152,7 +151,7 @@ class ShoppingCart {
         return;
     }
 
-    // 重定向到結帳頁面
+   
     window.location.href = '../html/checkout.html';
     }
 
@@ -181,10 +180,10 @@ class ShoppingCart {
     }
 }
 
-// 創建全局購物車實例
+
 const cart = new ShoppingCart();
 
-// 顯示購物車的全局函數
+
 function showCart(event) {
     event.preventDefault();
     cart.showCart();

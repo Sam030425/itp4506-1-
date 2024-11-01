@@ -21,11 +21,11 @@ class InsuranceProfile {
     }
 
     loadProfileData() {
-        // 載入基本資料
+       
         document.getElementById('agentName').textContent = this.currentUser.name;
         document.getElementById('agentEmail').textContent = `Email: ${this.currentUser.email}`;
 
-        // 填充表單數據
+     
         document.getElementById('name').value = this.currentUser.name;
         document.getElementById('phone').value = this.currentUser.phone || '';
         document.getElementById('licenseNumber').value = this.currentUser.licenseNumber || 'IA-' + Math.random().toString(36).substr(2, 8).toUpperCase();
@@ -37,7 +37,7 @@ class InsuranceProfile {
             policy.agentId === this.currentUser.id
         );
 
-        // 計算當月保費收入
+       
         const currentMonth = new Date().getMonth();
         const monthlyPremium = userPolicies
             .filter(policy => 
@@ -46,12 +46,12 @@ class InsuranceProfile {
             )
             .reduce((sum, policy) => sum + policy.premium, 0);
 
-        // 計算活躍保單數
+       
         const activePolicies = userPolicies.filter(policy => 
             policy.status === 'active'
         ).length;
 
-        // 計算核准率
+       
         const processedPolicies = userPolicies.filter(policy => 
             ['approved', 'active', 'rejected'].includes(policy.status)
         );
@@ -62,7 +62,7 @@ class InsuranceProfile {
             ? ((approvedPolicies.length / processedPolicies.length) * 100).toFixed(1)
             : 0;
 
-        // 計算客戶滿意度
+        
         const ratings = userPolicies
             .filter(policy => policy.clientRating)
             .map(policy => policy.clientRating);
@@ -70,7 +70,7 @@ class InsuranceProfile {
             ? (ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length).toFixed(1)
             : 'N/A';
 
-        // 更新顯示
+        
         document.getElementById('monthlyPremium').textContent = `HK$${monthlyPremium.toLocaleString()}`;
         document.getElementById('activePolicies').textContent = activePolicies;
         document.getElementById('currentMonthPremium').textContent = `HK$${monthlyPremium.toLocaleString()}`;
@@ -136,7 +136,7 @@ class InsuranceProfile {
     }
 
     initializeEventListeners() {
-        // 個人信息表單提交
+        
         const personalInfoForm = document.getElementById('personalInfoForm');
         if (personalInfoForm) {
             personalInfoForm.addEventListener('submit', (e) => {
@@ -145,7 +145,7 @@ class InsuranceProfile {
             });
         }
 
-        // 安全設定表單提交
+        
         const securityForm = document.getElementById('securityForm');
         if (securityForm) {
             securityForm.addEventListener('submit', (e) => {
@@ -159,14 +159,13 @@ class InsuranceProfile {
         const name = document.getElementById('name').value;
         const phone = document.getElementById('phone').value;
 
-        // 更新當前用戶信息
+       
         this.currentUser.name = name;
         this.currentUser.phone = phone;
 
-        // 更新 localStorage
+        
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
 
-        // 更新用戶列表中的信息
         let users = JSON.parse(localStorage.getItem('users')) || [];
         users = users.map(user => {
             if (user.email === this.currentUser.email) {
@@ -184,23 +183,23 @@ class InsuranceProfile {
         const newPassword = document.getElementById('newPassword').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
 
-        // 驗證當前密碼
+        
         if (currentPassword !== this.currentUser.password) {
             this.showMessage('Current password is incorrect', 'error');
             return;
         }
 
-        // 驗證新密碼
+        
         if (newPassword !== confirmPassword) {
             this.showMessage('New passwords do not match', 'error');
             return;
         }
 
-        // 更新密碼
+        
         this.currentUser.password = newPassword;
         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
 
-        // 更新用戶列表中的密碼
+        
         let users = JSON.parse(localStorage.getItem('users')) || [];
         users = users.map(user => {
             if (user.email === this.currentUser.email) {
@@ -210,7 +209,7 @@ class InsuranceProfile {
         });
         localStorage.setItem('users', JSON.stringify(users));
 
-        // 清空表單
+        
         document.getElementById('securityForm').reset();
         this.showMessage('Password updated successfully');
     }
@@ -254,7 +253,7 @@ class InsuranceProfile {
             policy.agentId === this.currentUser.id
         );
 
-        // 計算各種績效指標
+        
         const metrics = {
             totalPolicies: userPolicies.length,
             activePolicies: userPolicies.filter(p => p.status === 'active').length,
@@ -285,5 +284,5 @@ class InsuranceProfile {
     }
 }
 
-// 創建保險代理人資料實例
+
 const insuranceProfile = new InsuranceProfile();

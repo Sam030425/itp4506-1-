@@ -6,7 +6,7 @@ class InsuranceManager {
     }
 
     init() {
-        // 檢查用戶權限
+       
         if (!this.currentUser || this.currentUser.userType !== 'insuranceSalesperson') {
             this.showMessage('Access denied. Only Insurance Agents can access this page.', 'error');
             setTimeout(() => {
@@ -444,5 +444,5 @@ class InsuranceManager {
     }
 }
 
-// 創建保險管理器實例
+
 const insuranceManager = new InsuranceManager();

@@ -15,7 +15,7 @@ class OrderManager {
     }
 
     loadOrders() {
-        // 只加載當前用戶的訂單
+       
         const userOrders = this.orders.filter(order => 
             order.userId === this.currentUser.email
         );
@@ -110,7 +110,7 @@ class OrderManager {
             </div>
         `).join('');
 
-        // 添加事件監聽器
+        
         this.attachEventListeners();
     }
 
@@ -140,7 +140,7 @@ class OrderManager {
     }
 
     attachEventListeners() {
-        // 添加任何必要的事件監聽器
+        
     }
 
     cancelOrder(orderId) {
@@ -158,12 +158,13 @@ class OrderManager {
     }
 
     viewDetails(orderId) {
-        // 實現查看訂單詳情的邏輯
+        
         const order = this.orders.find(o => o.orderId === orderId);
         if (order) {
-            // 可以打開一個模態窗顯示詳細信息
+           
         }
     }
+
 
     showMessage(message) {
         const messageDiv = document.createElement('div');
@@ -190,10 +191,10 @@ class OrderManager {
     }
 }
 
-// 創建訂單管理器實例
+
 const orderManager = new OrderManager();
 
-// 重置篩選器
+
 function resetFilters() {
     document.getElementById('statusFilter').value = 'all';
     document.getElementById('startDate').value = '';

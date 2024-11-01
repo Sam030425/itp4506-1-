@@ -1,4 +1,4 @@
-// auth.js
+
 class Auth {
     constructor() {
         this.initializeAuth();
@@ -6,13 +6,13 @@ class Auth {
     }
 
     initializeAuth() {
-        // 檢查是否有保存的登入狀態
+        
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.updateUIState();
     }
 
     setupEventListeners() {
-        // 在檔案載入時設置事件監聽器
+       
         document.addEventListener('DOMContentLoaded', () => {
             this.updateUIState();
             this.setupUserMenu();
@@ -27,7 +27,7 @@ class Auth {
             userSection.innerHTML = `
                 <div class="user-info">
                     <span class="user-name">${this.currentUser.name}</span>
-                    <span class="dropdown-arrow">▼</span> <!-- 下拉箭頭 -->
+                    <span class="dropdown-arrow">▼</span> 
                 </div>
                 <div class="user-menu">
                     <a href="../html/profile.html" class="user-menu-item">Profile</a>
@@ -52,7 +52,7 @@ class Auth {
                 userMenu.classList.toggle('active');
             });
 
-            // 點擊其他地方關閉選單
+          
             document.addEventListener('click', () => {
                 userMenu.classList.remove('active');
             });
@@ -64,27 +64,27 @@ class Auth {
     }
 
     logout() {
-        // 移除所有存儲的資訊
+        
         localStorage.removeItem('currentUser');
         localStorage.removeItem('cart');
         localStorage.removeItem('wishlist');
         
-        // 顯示登出消息
+        
         this.showLogoutMessage();
         
-        // 延遲後重定向到首頁
+        
         setTimeout(() => {
             window.location.href = '../html/index.html';
         }, 1500);
     }
 
     showLogoutMessage() {
-        // 創建消息元素
+       
         const messageDiv = document.createElement('div');
         messageDiv.className = 'logout-message';
         messageDiv.innerHTML = 'Logout successful! Redirecting...';
         
-        // 添加樣式
+        
         messageDiv.style.cssText = `
             position: fixed;
             top: 20px;
@@ -97,10 +97,10 @@ class Auth {
             z-index: 1000;
         `;
 
-        // 添加到頁面
+        
         document.body.appendChild(messageDiv);
 
-        // 設置動畫
+       
         document.head.insertAdjacentHTML('beforeend', `
             <style>
                 @keyframes slideIn {
@@ -110,27 +110,26 @@ class Auth {
             </style>
         `);
 
-        // 自動移除消息
+       
         setTimeout(() => {
             messageDiv.remove();
         }, 1500);
     }
 
-    // 檢查是否已登入
+   
     isLoggedIn() {
         return !!this.currentUser;
     }
 
-    // 獲取當前用戶資訊
+   
     getCurrentUser() {
         return this.currentUser;
     }
 
-    // 檢查用戶權限
     hasPermission(requiredType) {
         return this.currentUser && this.currentUser.userType === requiredType;
     }
 }
 
-// 創建全局實例
+
 const auth = new Auth();

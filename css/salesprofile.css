@@ -1,11 +1,11 @@
-/* 主容器樣式 */
+
 .profile-container {
     max-width: 1200px;
     margin: 100px auto 40px;
     padding: 0 20px;
 }
 
-/* 導航欄樣式 */
+
 .navbar {
     background-color: #333;
     padding: 1rem;
@@ -30,14 +30,14 @@
     text-decoration: none;
 }
 
-/* 導航欄右側樣式 */
+
 .nav-right {
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-/* 統一按鈕樣式 */
+
 .nav-right .action-btn,
 .nav-right .logout-btn {
     padding: 8px 16px;
@@ -54,7 +54,7 @@
     justify-content: center;
 }
 
-/* 銷售管理按鈕樣式 */
+
 .nav-right .action-btn {
     background: #4285f4;
     color: white;
@@ -64,7 +64,7 @@
     background: #3367d6;
 }
 
-/* 登出按鈕樣式 */
+
 .nav-right .logout-btn {
     background: #dc3545;
     color: white;
@@ -89,7 +89,7 @@
     gap: 30px;
 }
 
-/* 個人資料卡片樣式 */
+
 .profile-card {
     background: white;
     border-radius: 8px;
@@ -136,14 +136,14 @@
     color: #007bff;
 }
 
-/* 詳細信息區域樣式 */
+
 .profile-details {
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
-/* 表單樣式 */
+
 .profile-form {
     display: grid;
     gap: 20px;
@@ -186,7 +186,7 @@
     background: #0056b3;
 }
 
-/* 績效指標樣式 */
+
 .performance-metrics {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -217,7 +217,7 @@
     font-size: 0.9rem;
 }
 
-/* 活動列表樣式 */
+
 .activity-list {
     display: flex;
     flex-direction: column;
@@ -258,7 +258,7 @@
     font-size: 0.9rem;
 }
 
-/* 響應式設計 */
+
 @media (max-width: 992px) {
     .profile-content {
         grid-template-columns: 1fr;
@@ -290,7 +290,7 @@
     }
 }
 
-/* 消息提示樣式 */
+
 .message {
     position: fixed;
     top: 20px;

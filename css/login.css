@@ -2,18 +2,20 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Microsoft JhengHei", sans-serif;
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    font-style: normal;
 }
 
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #f5f5f5;
+    background: linear-gradient(135deg, #A6A6A6, #A8D5BA, #F0E68C);
 }
 
 .navbar {
-    background-color: #333;
+    background-color: #325170;
     padding: 1rem;
     position: fixed;
     width: 100%;
@@ -28,6 +30,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
+    
 }
 
 .logo {
@@ -53,7 +56,7 @@ body {
 }
 
 .nav-menu a:hover {
-    background-color: #555;
+    background-color: #007bff;
 }
 
 .main-content {
@@ -155,7 +158,6 @@ body {
     }
 }
 
-/* 用戶選單樣式 */
 .user-section {
     position: relative;
     display: inline-block;
@@ -222,7 +224,7 @@ body {
     background-color: #c82333;
 }
 
-/* 登入按鈕樣式 */
+
 .login-btn {
     padding: 8px 15px;
     background-color: #007bff;

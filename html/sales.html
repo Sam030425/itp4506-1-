@@ -6,15 +6,16 @@
     <title>Sales Management - Legend Motor</title>
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/sales.css">
+    <link rel="icon" href="../images/icon1.png">
 </head>
 <body>
-    <!-- 導航欄 -->
+    
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">Legend Motor</a>
+            <a href="sales.html" class="logo">Legend Motor</a>
             <div class="nav-menu">
-                    <a href="../html/salesprofile.html" class="profile-btn">Profile</a>
-                    <button class="logout-btn" onclick="salesManager.logout()">Logout</button>
+                    <a href="../html/salesprofile.html" class="profile-btn" style="padding: 10px 20px; font-size: 1rem;">Profile</a>
+                    <button class="logout-btn" style="padding: 10px 20px; font-size: 1rem;" onclick="salesManager.logout()">Logout</button>
             </div>
         </div>
     </nav>
@@ -24,7 +25,7 @@
             <h1>Sales Management</h1>
         </div>
 
-        <!-- 銷售數據概覽 -->
+        
         <div class="sales-overview">
             <div class="overview-card">
                 <h3>Today's Sales</h3>
@@ -44,7 +45,7 @@
             </div>
         </div>
 
-        <!-- 訂單管理部分 -->
+        
         <div class="orders-section">
             <div class="section-header">
                 <h2>Order Management</h2>
@@ -75,20 +76,20 @@
                         </tr>
                     </thead>
                     <tbody id="ordersTableBody">
-                        <!-- 訂單將由 JavaScript 動態生成 -->
+                        
                     </tbody>
                 </table>
             </div>
         </div>
     </main>
 
-    <!-- 訂單詳情模態窗 -->
+    
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Order Details</h2>
             <div id="orderDetails">
-                <!-- 訂單詳情將由 JavaScript 動態生成 -->
+                
             </div>
         </div>
     </div>

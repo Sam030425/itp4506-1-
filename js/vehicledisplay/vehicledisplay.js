@@ -54,29 +54,52 @@ const vehicles = [
         price: 27194921,
         type: 'sports',
         image: '../images/car5.jpg'
-    }
+    },
+    {
+        id: 6,
+        brand: 'mercedes-benz',
+        model: 'Mercedes-Benz EQA 250',
+        year: 2021,
+        mileage: 0,
+        engine: 'Electric Motor',
+        price: 399000,
+        type: 'suv',
+        image: '../images/car7.jpg'
+    },
+
+    {
+        id: 7,
+        brand: 'bmw',
+        model: 'BMW M4 COUPÉ',
+        year: 2025,
+        mileage: 0,
+        engine: 'M TwinPower Turbo inline 6-cylinder',
+        price: 1749000,
+        type: 'Coupé',
+        image: '../images/car8.jpg'
+    },
 ];
 
-// 初始化頁面
+
 document.addEventListener('DOMContentLoaded', () => {
     initializeFilters();
     updateVehicleDisplay(vehicles);
     checkLoginStatus();
     
-    // 添加初始提示
+ 
     const filterSection = document.querySelector('.filter-section');
     if (filterSection) {
         filterSection.insertAdjacentHTML('afterbegin', '<div class="filter-hint">-</div>');
     }
 });
 
-// 檢查登入狀態
+
 function checkLoginStatus() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     updateUserInterface(currentUser);
 }
 
-// 更新用戶界面
+
 function updateUserInterface(currentUser) {
     const navRight = document.querySelector('.nav-right');
     if (!navRight) return;
@@ -110,7 +133,6 @@ function updateUserInterface(currentUser) {
     }
 }
 
-// 初始化篩選器
 function initializeFilters() {
     const filters = ['brandFilter', 'priceFilter', 'typeFilter'];
     
@@ -130,7 +152,7 @@ function initializeFilters() {
     }
 }
 
-// 更新篩選狀態
+
 function updateFilterStatus(filterId) {
     const filter = document.getElementById(filterId);
     if (filter) {
@@ -138,7 +160,7 @@ function updateFilterStatus(filterId) {
     }
 }
 
-// 篩選車輛
+
 function filterVehicles() {
     const brandFilter = document.getElementById('brandFilter')?.value;
     const priceFilter = document.getElementById('priceFilter')?.value;
@@ -184,7 +206,7 @@ function filterVehicles() {
     updateVehicleDisplay(filteredVehicles);
 }
 
-// 更新車輛展示
+
 function updateVehicleDisplay(vehicles) {
     const vehiclesGrid = document.querySelector('.vehicles-grid') || document.createElement('div');
     vehiclesGrid.className = 'vehicles-grid';
@@ -225,7 +247,7 @@ function updateVehicleDisplay(vehicles) {
     }
 }
 
-// 顯示車輛詳情
+
 function showVehicleDetails(vehicleId) {
     const vehicle = vehicles.find(v => v.id === vehicleId);
     if (vehicle) {
@@ -294,7 +316,7 @@ function showVehicleDetails(vehicleId) {
     }
 }
 
-// 處理加入購物車
+
 function handleAddToCart(vehicleId) {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (!currentUser) {
@@ -317,7 +339,7 @@ function handleAddToCart(vehicleId) {
     }
 }
 
-// 處理立即購買
+
 function handleBuyNow(vehicleId) {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     
@@ -339,7 +361,7 @@ function handleBuyNow(vehicleId) {
     }
 }
 
-// 顯示消息提示
+
 function showMessage(message, type = 'info') {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${type}`;
@@ -377,14 +399,14 @@ function showMessage(message, type = 'info') {
     }, 3000);
 }
 
-// 登出函數
+
 function logout() {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('cart');
     window.location.href = 'login.html';
 }
 
-// 重置所有篩選器
+
 function resetFilters() {
     const filters = ['brandFilter', 'priceFilter', 'typeFilter'];
     
@@ -404,8 +426,8 @@ function resetFilters() {
     updateVehicleDisplay(vehicles);
 }
 
-// 錯誤處理
+
 window.onerror = function(msg, url, lineNo, columnNo, error) {
-    console.error('錯誤: ' + msg + '\n網址: ' + url + '\n行號: ' + lineNo + '\n列號: ' + columnNo + '\n錯誤物件: ' + error);
+    console.error('Error: ' + msg + '\nURL: ' + url + '\nLine Number: ' + lineNo + '\nColumn Number: ' + columnNo + '\nError Object: ' + error);
     return false;
 };

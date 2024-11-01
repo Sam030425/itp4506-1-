@@ -6,9 +6,10 @@
     <title>My Profile - Legend Motor</title>
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/profile.css">
+    <link rel="icon" href="../images/icon1.png">
 </head>
 <body>
-    <!-- 導航欄 -->
+   
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">Legend Motor</a>
@@ -20,7 +21,7 @@
                 <div class="user-section">
                 </div>
                     <a href="#" class="cart-icon" onclick="showCart(event)">
-                        🛒 <!-- 購物車圖標 -->
+                        🛒 
                         <span class="cart-count">0</span>
                     </a>
                 </div>
@@ -28,14 +29,14 @@
         </div>
     </nav>
 
-    <!-- 主要內容 -->
+    
     <main class="profile-container">
         <div class="profile-header">
             <h1>My Profile</h1>
         </div>
 
         <div class="profile-content">
-            <!-- 側邊欄導航 -->
+            
             <div class="profile-nav">
                 <button class="nav-item active" data-section="personal-info">
                     Personal Information
@@ -48,7 +49,7 @@
                 </button>
             </div>
 
-            <!-- 個人信息部分 -->
+            
             <div class="profile-section active" id="personal-info">
                 <h2>Personal Information</h2>
                 <form id="personal-info-form" class="profile-form">
@@ -72,7 +73,7 @@
                 </form>
             </div>
 
-            <!-- 安全設置部分 -->
+            
             <div class="profile-section" id="security">
                 <h2>Security Settings</h2>
                 <form id="security-form" class="profile-form">
@@ -92,11 +93,11 @@
                 </form>
             </div>
 
-            <!-- 地址簿部分 -->
+            
             <div class="profile-section" id="address">
                 <h2>Address Book</h2>
                 <div class="addresses-list">
-                    <!-- 地址會由 JavaScript 動態生成 -->
+                    
                 </div>
                 <button class="add-address-btn" onclick="profileManager.showAddAddressForm()">
                     Add New Address
@@ -105,7 +106,7 @@
         </div>
     </main>
 
-    <!-- 添加地址的模態窗 -->
+    
     <div id="addressModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -136,9 +137,9 @@
         </div>
     </div>
 
-    <!-- 頁腳 -->
+   
     <footer class="footer">
-        <!-- 頁腳內容 -->
+       
     </footer>
     <script src="../js/login/auth.js"></script>
     <script src="../js/login/login.js"></script>
