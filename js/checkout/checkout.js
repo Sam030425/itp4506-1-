@@ -43,9 +43,67 @@ class Checkout {
         return 'POL-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
     }
 
-    updateAllPrices() {
+    attachEventListeners() {
+        try {
+            document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    document.querySelectorAll('.payment-details').forEach(detail => {
+                        detail.classList.add('hidden');
+                    });
+                    const selectedDetails = e.target.parentElement.querySelector('.payment-details');
+                    if (selectedDetails) {
+                        selectedDetails.classList.remove('hidden');
+                    }
+                });
+            });
+
+            const ageInput = document.getElementById('userAge');
+            if (ageInput) {
+                ageInput.addEventListener('input', () => this.updateInsuranceSummary());
+                ageInput.addEventListener('change', () => this.updateInsuranceSummary());
+            }
+
+            const accidentFree = document.getElementById('accidentFree');
+            const safetySystem = document.getElementById('safetySystem');
+            
+            if (accidentFree) {
+                accidentFree.addEventListener('change', () => this.updateInsuranceSummary());
+            }
+            
+            if (safetySystem) {
+                safetySystem.addEventListener('change', () => this.updateInsuranceSummary());
+            }
+
+            const nextStepBtns = document.querySelectorAll('.next-step-btn');
+            nextStepBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const currentStep = parseInt(e.target.closest('.checkout-section').dataset.step || '1');
+                    this.nextStep(currentStep);
+                });
+            });
+
+            const backBtns = document.querySelectorAll('.back-btn');
+            backBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const currentStep = parseInt(e.target.closest('.checkout-section').dataset.step || '2');
+                    this.previousStep(currentStep);
+                });
+            });
+
+            const finishBtn = document.querySelector('.finish-btn');
+            if (finishBtn) {
+                finishBtn.addEventListener('click', () => this.finishOrder());
+            }
+
+        } catch (error) {
+            console.error('Error attaching event listeners:', error);
+        }
+    }
+
+    updateInsuranceSummary() {
         try {
             const insuranceAmount = this.calculateInsurance();
+            
             const totalInsuranceElement = document.querySelector('.total-insurance');
             if (totalInsuranceElement) {
                 totalInsuranceElement.textContent = `Final Insurance: HK$${insuranceAmount.toLocaleString()}`;
@@ -64,26 +122,41 @@ class Checkout {
 
             this.updateDiscountDisplay();
         } catch (error) {
-            console.error('Error updating prices:', error);
+            console.error('Error updating insurance summary:', error);
         }
     }
 
     updateDiscountDisplay() {
         try {
+            const userAge = parseInt(document.getElementById('userAge')?.value || '0');
             const accidentFreeChecked = document.getElementById('accidentFree')?.checked ?? false;
             const safetySystemChecked = document.getElementById('safetySystem')?.checked ?? false;
 
+            const ageDiscountLine = document.querySelector('.age-discount-line');
+            if (ageDiscountLine) {
+                if (userAge >= 30 && userAge <= 40) {
+                    const ageDiscountAmount = this.baseInsurance * 0.10;
+                    ageDiscountLine.classList.add('active');
+                    ageDiscountLine.querySelector('span').textContent = `-HK$${ageDiscountAmount.toLocaleString()}`;
+                } else {
+                    ageDiscountLine.classList.remove('active');
+                    ageDiscountLine.querySelector('span').textContent = 'Not Eligible';
+                }
+            }
+
             const accidentFreeDiscount = document.querySelector('.accident-free-discount');
             if (accidentFreeDiscount) {
+                const accidentDiscountAmount = accidentFreeChecked ? this.baseInsurance * 0.15 : 0;
                 accidentFreeDiscount.textContent = accidentFreeChecked ? 
-                    'No Accident Discount: -15%' : 
+                    `No Accident Discount: -HK$${accidentDiscountAmount.toLocaleString()}` : 
                     'No Accident Discount: Not Applied';
             }
 
             const safetySystemDiscount = document.querySelector('.safety-system-discount');
             if (safetySystemDiscount) {
+                const safetyDiscountAmount = safetySystemChecked ? this.baseInsurance * 0.05 : 0;
                 safetySystemDiscount.textContent = safetySystemChecked ? 
-                    'Safety System Discount: -5%' : 
+                    `Safety System Discount: -HK$${safetyDiscountAmount.toLocaleString()}` : 
                     'Safety System Discount: Not Applied';
             }
         } catch (error) {
@@ -104,7 +177,7 @@ class Checkout {
                 </div>
 
                 <!-- Step 1: Order & Insurance Review -->
-                <div class="checkout-section" id="orderReview">
+                <div class="checkout-section" id="orderReview" data-step="1">
                     <h2>Order Review</h2>
                     <div class="order-items">
                         ${this.renderOrderItems()}
@@ -125,8 +198,7 @@ class Checkout {
                                            min="18" 
                                            max="99" 
                                            placeholder="Enter age"
-                                           value="${this.currentUser.age || ''}"
-                                           onchange="checkout.updateInsuranceSummary()">
+                                           value="${this.currentUser.age || ''}">
                                     <p class="age-discount-info">Age 30-40 eligible for 10% discount</p>
                                 </div>
                                 <div class="driver-license-input">
@@ -143,14 +215,12 @@ class Checkout {
                             <div class="insurance-discounts">
                                 <h4>Available Discounts</h4>
                                 <div class="insurance-option">
-                                    <input type="checkbox" id="accidentFree" name="insuranceOptions" checked 
-                                           onchange="checkout.updateInsuranceSummary()">
+                                    <input type="checkbox" id="accidentFree" name="insuranceOptions" checked>
                                     <label for="accidentFree">No Accident Record (15% off)</label>
                                     <p class="discount-description">No accidents or claims in the past 3 years</p>
                                 </div>
                                 <div class="insurance-option">
-                                    <input type="checkbox" id="safetySystem" name="insuranceOptions" checked
-                                           onchange="checkout.updateInsuranceSummary()">
+                                    <input type="checkbox" id="safetySystem" name="insuranceOptions" checked>
                                     <label for="safetySystem">Safety System Equipped (5% off)</label>
                                     <p class="discount-description">Vehicle equipped with advanced safety features</p>
                                 </div>
@@ -176,8 +246,8 @@ class Checkout {
                                 <h4>Insurance Premium Calculation</h4>
                                 <p>Base Insurance: HK$${this.baseInsurance.toLocaleString()}</p>
                                 <p class="age-discount-line">Age Discount (30-40): <span>Not Eligible</span></p>
-                                <p class="accident-free-discount">No Accident Discount: -15%</p>
-                                <p class="safety-system-discount">Safety System Discount: -5%</p>
+                                <p class="accident-free-discount">No Accident Discount: -HK$${(this.baseInsurance * 0.15).toLocaleString()}</p>
+                                <p class="safety-system-discount">Safety System Discount: -HK$${(this.baseInsurance * 0.05).toLocaleString()}</p>
                                 <p class="total-insurance">Final Insurance: HK$${this.calculateInsurance().toLocaleString()}</p>
                                 <p class="coverage-period">Coverage Period: 1 Year</p>
                             </div>
@@ -203,7 +273,7 @@ class Checkout {
                             <span>HK$${(this.calculateSubtotal() + this.calculateTax() + this.calculateInsurance()).toLocaleString()}</span>
                         </div>
                     </div>
-                    <button class="next-step-btn" onclick="checkout.nextStep(1)">Continue to Payment</button>
+                    <button class="next-step-btn">Continue to Payment</button>
                 </div>
 
                 <!-- Payment Method Section -->
@@ -215,13 +285,13 @@ class Checkout {
         `;
 
         mainContent.innerHTML = checkoutHTML;
-        this.updateAllPrices();
+        this.updateInsuranceSummary();
     }
 
     renderPaymentSection() {
         return `
             <!-- Step 2: Payment Method -->
-            <div class="checkout-section hidden" id="paymentMethod">
+            <div class="checkout-section hidden" id="paymentMethod" data-step="2">
                 <h2>Payment Method</h2>
                 <div class="payment-options">
                     <div class="payment-option">
@@ -246,8 +316,8 @@ class Checkout {
                     </div>
                 </div>
                 <div class="button-group">
-                    <button class="back-btn" onclick="checkout.previousStep(2)">Back</button>
-                    <button class="next-step-btn" onclick="checkout.nextStep(2)">Confirm Payment</button>
+                    <button class="back-btn">Back</button>
+                    <button class="next-step-btn">Confirm Payment</button>
                 </div>
             </div>
         `;
@@ -256,7 +326,7 @@ class Checkout {
     renderConfirmationSection() {
         return `
             <!-- Step 3: Confirmation -->
-            <div class="checkout-section hidden" id="confirmation">
+            <div class="checkout-section hidden" id="confirmation" data-step="3">
                 <h2>Order & Insurance Confirmation</h2>
                 <div class="confirmation-details">
                     <div class="order-number">
@@ -274,7 +344,7 @@ class Checkout {
                         ${this.renderOrderSummary()}
                     </div>
                 </div>
-                <button class="finish-btn" onclick="checkout.finishOrder()">Back to Home</button>
+                <button class="finish-btn">Back to Home</button>
             </div>
         `;
     }
@@ -301,47 +371,23 @@ class Checkout {
             
             const ageInput = document.getElementById('userAge');
             const userAge = ageInput ? parseInt(ageInput.value) : 0;
-            
+
             if (userAge >= 30 && userAge <= 40) {
                 const ageDiscount = this.baseInsurance * 0.10;
                 totalDiscount += ageDiscount;
-                
-                const ageDiscountLine = document.querySelector('.age-discount-line');
-                if (ageDiscountLine) {
-                    ageDiscountLine.classList.add('active');
-                    ageDiscountLine.querySelector('span').textContent = 
-                        `-HK$${ageDiscount.toLocaleString()}`;
-                }
-            } else {
-                const ageDiscountLine = document.querySelector('.age-discount-line');
-                if (ageDiscountLine) {
-                    ageDiscountLine.classList.remove('active');
-                    ageDiscountLine.querySelector('span').textContent = 'Not Eligible';
-                }
             }
-    
+
             const accidentFreeChecked = document.getElementById('accidentFree')?.checked ?? false;
-            if (accidentFreeChecked) {
-                const accidentDiscount = this.baseInsurance * 0.15;
-                totalDiscount += accidentDiscount;
-
-                const accidentFreeLine = document.querySelector('.accident-free-discount');
-                if (accidentFreeLine) {
-                    accidentFreeLine.textContent = `No Accident Discount: -HK$${accidentDiscount.toLocaleString()}`;
-                }
-            }
-
             const safetySystemChecked = document.getElementById('safetySystem')?.checked ?? false;
-            if (safetySystemChecked) {
-                const safetyDiscount = this.baseInsurance * 0.05;
-                totalDiscount += safetyDiscount;
-                
-                const safetySystemLine = document.querySelector('.safety-system-discount');
-                if (safetySystemLine) {
-                    safetySystemLine.textContent = `Safety System Discount: -HK$${safetyDiscount.toLocaleString()}`;
-                }
+
+            if (accidentFreeChecked) {
+                totalDiscount += this.baseInsurance * 0.15;
             }
-    
+
+            if (safetySystemChecked) {
+                totalDiscount += this.baseInsurance * 0.05;
+            }
+
             const finalInsurance = this.baseInsurance - totalDiscount;
             return Math.max(finalInsurance, 0);
         } catch (error) {
@@ -349,6 +395,7 @@ class Checkout {
             return this.baseInsurance;
         }
     }
+
     calculateSubtotal() {
         return this.cartItems.reduce((total, item) => total + item.price, 0);
     }
@@ -492,52 +539,73 @@ class Checkout {
         `;
     }
 
-    updateInsuranceSummary() {
-        if (this.validateAge()) {
-            const insuranceAmount = this.calculateInsurance();
-            
-            const totalInsuranceElement = document.querySelector('.total-insurance');
-            if (totalInsuranceElement) {
-                totalInsuranceElement.textContent = `Final Insurance: HK$${insuranceAmount.toLocaleString()}`;
+    nextStep(currentStep) {
+        try {
+            if (currentStep === 1) {
+                if (!this.validateDriverInfo()) return;
+                document.getElementById('orderReview').classList.add('hidden');
+                document.getElementById('paymentMethod').classList.remove('hidden');
+            } else if (currentStep === 2) {
+                const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+                if (!selectedPayment) {
+                    this.showMessage('Please select a payment method!', 'error');
+                    return;
+                }
+                if (selectedPayment.value === 'creditCard' && !this.validateCreditCardInfo()) {
+                    return;
+                }
+                document.getElementById('paymentMethod').classList.add('hidden');
+                document.getElementById('confirmation').classList.remove('hidden');
+                this.saveOrder();
             }
-    
-            const insuranceSummaryElement = document.querySelector('.order-summary .summary-item:nth-child(3) span:last-child');
-            if (insuranceSummaryElement) {
-                insuranceSummaryElement.textContent = `HK$${insuranceAmount.toLocaleString()}`;
-            }
-    
-            const totalElement = document.querySelector('.order-summary .summary-item.total span:last-child');
-            if (totalElement) {
-                const total = this.calculateSubtotal() + this.calculateTax() + insuranceAmount;
-                totalElement.textContent = `HK$${total.toLocaleString()}`;
-            }
+
+            document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+            document.querySelector(`.step[data-step="${currentStep + 1}"]`).classList.add('active');
+        } catch (error) {
+            console.error('Error in nextStep:', error);
+            this.showMessage('An error occurred. Please try again.', 'error');
         }
     }
 
-    validateAge() {
-        const ageInput = document.getElementById('userAge');
-        if (!ageInput) return false;
-    
-        const age = parseInt(ageInput.value);
-        if (!age) {
-            this.showMessage('Please enter driver\'s age', 'error');
+    previousStep(currentStep) {
+        try {
+            if (currentStep === 2) {
+                document.getElementById('paymentMethod').classList.add('hidden');
+                document.getElementById('orderReview').classList.remove('hidden');
+            } else if (currentStep === 3) {
+                document.getElementById('confirmation').classList.add('hidden');
+                document.getElementById('paymentMethod').classList.remove('hidden');
+            }
+
+            document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+            document.querySelector(`.step[data-step="${currentStep - 1}"]`).classList.add('active');
+        } catch (error) {
+            console.error('Error in previousStep:', error);
+            this.showMessage('An error occurred. Please try again.', 'error');
+        }
+    }
+
+    validateDriverInfo() {
+        const age = document.getElementById('userAge').value;
+        const license = document.getElementById('driverLicense').value;
+
+        if (!age || !license) {
+            this.showMessage('Please complete all driver information', 'error');
             return false;
         }
-    
-        if (age < 18) {
+
+        if (parseInt(age) < 18) {
             this.showMessage('Driver must be at least 18 years old', 'error');
             return false;
         }
-    
-        if (age > 99) {
-            this.showMessage('Please enter a valid age', 'error');
+
+        if (license.length < 8) {
+            this.showMessage('Please enter a valid driver license number', 'error');
             return false;
         }
-    
+
         return true;
     }
-
-
 
     validateCreditCardInfo() {
         const cardNumber = document.querySelector('.card-number').value;
@@ -565,67 +633,6 @@ class Checkout {
         }
 
         return true;
-    }
-
-    attachEventListeners() {
-        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                document.querySelectorAll('.payment-details').forEach(detail => {
-                    detail.classList.add('hidden');
-                });
-                const selectedDetails = e.target.parentElement.querySelector('.payment-details');
-                if (selectedDetails) {
-                    selectedDetails.classList.remove('hidden');
-                }
-            });
-        });
-
-        const insuranceInputs = ['userAge', 'accidentFree', 'safetySystem'];
-        insuranceInputs.forEach(inputId => {
-            const element = document.getElementById(inputId);
-            if (element) {
-                element.addEventListener('change', () => this.updateInsuranceSummary());
-                if (inputId === 'userAge') {
-                    element.addEventListener('input', () => this.updateInsuranceSummary());
-                }
-            }
-        });
-    }
-
-    nextStep(currentStep) {
-        if (currentStep === 1) {
-            if (!this.validateDriverInfo()) return;
-            document.getElementById('orderReview').classList.add('hidden');
-            document.getElementById('paymentMethod').classList.remove('hidden');
-        } else if (currentStep === 2) {
-            const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
-            if (!selectedPayment) {
-                this.showMessage('Please select a payment method!', 'error');
-                return;
-            }
-            if (selectedPayment.value === 'creditCard' && !this.validateCreditCardInfo()) {
-                return;
-            }
-            document.getElementById('paymentMethod').classList.add('hidden');
-            document.getElementById('confirmation').classList.remove('hidden');
-            this.saveOrder();
-        }
-
-        document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
-        document.querySelector(`.step[data-step="${currentStep + 1}"]`).classList.add('active');
-    }
-
-    previousStep(currentStep) {
-        if (currentStep === 2) {
-            document.getElementById('paymentMethod').classList.add('hidden');
-            document.getElementById('orderReview').classList.remove('hidden');
-        } else if (currentStep === 3) {
-            document.getElementById('confirmation').classList.add('hidden');
-            document.getElementById('paymentMethod').classList.remove('hidden');
-        }
-
-        document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
-        document.querySelector(`.step[data-step="${currentStep - 1}"]`).classList.add('active');
     }
 
     showMessage(message, type = 'info') {
