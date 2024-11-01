@@ -1,3 +1,4 @@
+/* 基本容器樣式 */
 .orders-container {
     max-width: 1200px;
     margin: 100px auto 40px;
@@ -7,9 +8,10 @@
 .orders-container h1 {
     margin-bottom: 2rem;
     color: #333;
+    font-size: 2rem;
 }
 
-
+/* 篩選器樣式 */
 .order-filters {
     display: flex;
     gap: 1rem;
@@ -26,6 +28,7 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
+    min-width: 150px;
 }
 
 .date-filters {
@@ -40,15 +43,26 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
+.reset-btn:hover {
+    background: #5a6268;
+}
 
+/* 訂單卡片樣式 */
 .order-card {
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin-bottom: 1rem;
     overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.order-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 .order-header {
@@ -65,32 +79,39 @@
     color: #333;
 }
 
+.order-date {
+    color: #666;
+}
+
 .order-status {
     padding: 0.5rem 1rem;
     border-radius: 20px;
     font-size: 0.9rem;
+    font-weight: 500;
 }
 
+/* 狀態標籤顏色 */
 .status-pending {
-    background: #ffc107;
-    color: #000;
+    background: #fff3cd;
+    color: #856404;
 }
 
 .status-processing {
-    background: #17a2b8;
-    color: white;
+    background: #cce5ff;
+    color: #004085;
 }
 
 .status-completed {
-    background: #28a745;
-    color: white;
+    background: #d4edda;
+    color: #155724;
 }
 
 .status-cancelled {
-    background: #dc3545;
-    color: white;
+    background: #f8d7da;
+    color: #721c24;
 }
 
+/* 訂單內容樣式 */
 .order-body {
     padding: 1rem;
 }
@@ -104,6 +125,11 @@
     align-items: center;
     padding: 1rem;
     border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+}
+
+.order-item:hover {
+    background-color: #f8f9fa;
 }
 
 .item-image {
@@ -111,6 +137,7 @@
     height: 75px;
     object-fit: cover;
     margin-right: 1rem;
+    border-radius: 4px;
 }
 
 .item-details {
@@ -120,10 +147,12 @@
 .item-model {
     font-weight: bold;
     margin-bottom: 0.5rem;
+    color: #333;
 }
 
 .item-price {
     color: #007bff;
+    font-weight: 500;
 }
 
 .order-footer {
@@ -132,23 +161,217 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-top: 1px solid #eee;
 }
 
 .order-total {
     font-size: 1.2rem;
     font-weight: bold;
+    color: #333;
 }
 
+/* 按鈕樣式 */
 .order-actions button {
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     margin-left: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s;
 }
 
+.view-btn {
+    background: #007bff;
+    color: white;
+}
 
+.view-btn:hover {
+    background: #0056b3;
+}
+
+.cancel-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background: #c82333;
+}
+
+/* 模態窗口樣式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 50px auto;
+    padding: 30px;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.close:hover {
+    color: #333;
+}
+
+/* 訂單詳情樣式 */
+.info-grid, .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.info-item, .summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.info-item:hover {
+    background: #e9ecef;
+}
+
+.label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.value {
+    color: #333;
+}
+
+.order-detail-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #eee;
+    margin: 10px 0;
+    border-radius: 4px;
+    transition: transform 0.2s;
+}
+
+.order-detail-item:hover {
+    transform: translateX(5px);
+    border-color: #007bff;
+}
+
+.order-detail-item .item-image {
+    width: 120px;
+    height: 90px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 4px;
+}
+
+.order-detail-item .item-info {
+    flex: 1;
+}
+
+.order-detail-item h4 {
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.summary-item.total {
+    font-weight: bold;
+    background: #e9ecef;
+    border-top: 2px solid #dee2e6;
+}
+
+/* 分區標題樣式 */
+.order-info-section,
+.customer-info-section,
+.items-section,
+.insurance-section,
+.order-summary-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.order-info-section h3,
+.customer-info-section h3,
+.items-section h3,
+.insurance-section h3,
+.order-summary-section h3 {
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #007bff;
+}
+
+/* 消息提示樣式 */
+.message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 4px;
+    color: white;
+    z-index: 1000;
+    animation: slideIn 0.5s ease-out;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 無訂單時的樣式 */
+.no-orders {
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.no-orders p {
+    color: #666;
+    font-size: 1.2rem;
+}
+
+/* 響應式設計 */
 @media (max-width: 768px) {
+    .orders-container {
+        margin-top: 80px;
+        padding: 0 15px;
+    }
+
     .order-filters {
         flex-direction: column;
     }
@@ -160,6 +383,7 @@
     .order-header {
         flex-direction: column;
         gap: 0.5rem;
+        text-align: center;
     }
 
     .order-item {
@@ -170,5 +394,27 @@
     .item-image {
         margin-right: 0;
         margin-bottom: 1rem;
+        width: 150px;
+        height: 112px;
+    }
+
+    .info-grid, .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .order-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .order-actions button {
+        margin: 0;
+        width: 100%;
     }
 }

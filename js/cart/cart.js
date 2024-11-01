@@ -15,10 +15,10 @@ class ShoppingCart {
             <div class="cart-modal">
                 <div class="cart-header">
                     <h2>Shopping Cart</h2>
-                    <button class="close-cart">✕</button> <!-- 關閉圖標 -->
+                    <button class="close-cart">✕</button> <!-- Close Icon -->
                 </div>
                 <div class="cart-items">
-                    <!-- 購物車項目將在這裡動態添加 -->
+                    <!-- Shopping Cart Items Will Be Added Dynamically Here -->
                 </div>
                 <div class="cart-footer">
                     <div class="cart-total">
@@ -103,7 +103,7 @@ class ShoppingCart {
                         <div class="cart-item-price">HK$${item.price.toLocaleString()}</div>
                     </div>
                     <button class="remove-item" onclick="cart.removeItem(${item.id})">
-                        ✕ <!-- 關閉圖標 -->
+                        ✕ <!-- Close Icon -->
                     </button>
                 </div>
             `).join('');

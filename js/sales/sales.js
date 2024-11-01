@@ -139,7 +139,7 @@ class SalesManager {
     
         detailsContainer.innerHTML = `
             <div class="order-details">
-                <!-- 基本訂單信息 -->
+                <!-- Basic Order Information -->
                 <div class="detail-row">
                     <span>Order ID:</span>
                     <span>${order.orderId}</span>
@@ -159,7 +159,7 @@ class SalesManager {
                     <span>${order.salesPersonName || 'Not Assigned'}</span>
                 </div>
     
-                <!-- 客戶信息 -->
+                <!-- Customer Information -->
                 <div class="customer-info">
                     <h3>Customer Information</h3>
                     <div class="detail-row">
@@ -180,7 +180,7 @@ class SalesManager {
                     </div>
                 </div>
     
-                <!-- 訂單商品 -->
+                <!-- Order Items -->
                 <div class="order-items">
                     <h3>Order Items</h3>
                     ${order.items.map(item => `
@@ -194,7 +194,7 @@ class SalesManager {
                     `).join('')}
                 </div>
     
-                <!-- 狀態歷史 -->
+                <!-- Status History -->
                 <div class="status-history">
                     <h3>Order History</h3>
                     <div class="status-timeline">
@@ -202,13 +202,13 @@ class SalesManager {
                     </div>
                 </div>
     
-                <!-- 訂單總計 -->
+                <!-- Order Total -->
                 <div class="order-total">
                     <span>Total Amount:</span>
                     <span>HK$${order.total.toLocaleString()}</span>
                 </div>
     
-                <!-- 訂單操作按鈕 -->
+                <!-- Order Action Button -->
                 <div class="order-actions">
                     ${this.getDetailActionButtons(order)}
                 </div>

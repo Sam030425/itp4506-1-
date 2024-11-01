@@ -1,11 +1,16 @@
 class Checkout {
     constructor() {
-        this.cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        this.baseInsurance = 5000;
-        this.policyId = null; 
-        this.orderId = null; 
-        this.initCheckout();
+        try {
+            this.cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            this.baseInsurance = 5000;
+            this.policyId = null;
+            this.orderId = null;
+            this.initCheckout();
+        } catch (error) {
+            console.error('Checkout initialization error:', error);
+            this.showMessage('Error initializing checkout. Please try again.', 'error');
+        }
     }
 
     initCheckout() {
@@ -19,15 +24,14 @@ class Checkout {
                 return;
             }
 
-            
             this.orderId = this.generateOrderNumber();
             this.policyId = this.generatePolicyNumber();
 
             this.renderCheckoutPage();
             this.attachEventListeners();
         } catch (error) {
-            console.error('Checkout initialization error:', error);
-            this.showMessage('Error initializing checkout. Please try again.', 'error');
+            console.error('Error in initCheckout:', error);
+            this.showMessage('Error loading checkout page. Please try again.', 'error');
         }
     }
 
@@ -37,6 +41,54 @@ class Checkout {
 
     generatePolicyNumber() {
         return 'POL-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+    }
+
+    updateAllPrices() {
+        try {
+            const insuranceAmount = this.calculateInsurance();
+            const totalInsuranceElement = document.querySelector('.total-insurance');
+            if (totalInsuranceElement) {
+                totalInsuranceElement.textContent = `Final Insurance: HK$${insuranceAmount.toLocaleString()}`;
+            }
+
+            const insuranceSummaryElement = document.querySelector('.order-summary .summary-item:nth-child(3) span:last-child');
+            if (insuranceSummaryElement) {
+                insuranceSummaryElement.textContent = `HK$${insuranceAmount.toLocaleString()}`;
+            }
+
+            const totalElement = document.querySelector('.order-summary .summary-item.total span:last-child');
+            if (totalElement) {
+                const total = this.calculateSubtotal() + this.calculateTax() + insuranceAmount;
+                totalElement.textContent = `HK$${total.toLocaleString()}`;
+            }
+
+            this.updateDiscountDisplay();
+        } catch (error) {
+            console.error('Error updating prices:', error);
+        }
+    }
+
+    updateDiscountDisplay() {
+        try {
+            const accidentFreeChecked = document.getElementById('accidentFree')?.checked ?? false;
+            const safetySystemChecked = document.getElementById('safetySystem')?.checked ?? false;
+
+            const accidentFreeDiscount = document.querySelector('.accident-free-discount');
+            if (accidentFreeDiscount) {
+                accidentFreeDiscount.textContent = accidentFreeChecked ? 
+                    'No Accident Discount: -15%' : 
+                    'No Accident Discount: Not Applied';
+            }
+
+            const safetySystemDiscount = document.querySelector('.safety-system-discount');
+            if (safetySystemDiscount) {
+                safetySystemDiscount.textContent = safetySystemChecked ? 
+                    'Safety System Discount: -5%' : 
+                    'Safety System Discount: Not Applied';
+            }
+        } catch (error) {
+            console.error('Error updating discount display:', error);
+        }
     }
 
     renderCheckoutPage() {
@@ -163,6 +215,7 @@ class Checkout {
         `;
 
         mainContent.innerHTML = checkoutHTML;
+        this.updateAllPrices();
     }
 
     renderPaymentSection() {
@@ -243,51 +296,59 @@ class Checkout {
     }
 
     calculateInsurance() {
-        let totalDiscount = 0;
-        
-    
-        const ageInput = document.getElementById('userAge');
-        const userAge = ageInput ? parseInt(ageInput.value) : 0;
-        
-        
-        let ageDiscount = 0;
-        if (userAge >= 30 && userAge <= 40) {
-            ageDiscount = this.baseInsurance * 0.10;
-            totalDiscount += ageDiscount;
+        try {
+            let totalDiscount = 0;
             
-           
-            const ageDiscountLine = document.querySelector('.age-discount-line');
-            if (ageDiscountLine) {
-                ageDiscountLine.classList.add('active');
-                ageDiscountLine.querySelector('span').textContent = `-HK$${ageDiscount.toLocaleString()}`;
+            const ageInput = document.getElementById('userAge');
+            const userAge = ageInput ? parseInt(ageInput.value) : 0;
+            
+            if (userAge >= 30 && userAge <= 40) {
+                const ageDiscount = this.baseInsurance * 0.10;
+                totalDiscount += ageDiscount;
+                
+                const ageDiscountLine = document.querySelector('.age-discount-line');
+                if (ageDiscountLine) {
+                    ageDiscountLine.classList.add('active');
+                    ageDiscountLine.querySelector('span').textContent = 
+                        `-HK$${ageDiscount.toLocaleString()}`;
+                }
+            } else {
+                const ageDiscountLine = document.querySelector('.age-discount-line');
+                if (ageDiscountLine) {
+                    ageDiscountLine.classList.remove('active');
+                    ageDiscountLine.querySelector('span').textContent = 'Not Eligible';
+                }
             }
-        } else {
-            const ageDiscountLine = document.querySelector('.age-discount-line');
-            if (ageDiscountLine) {
-                ageDiscountLine.classList.remove('active');
-                ageDiscountLine.querySelector('span').textContent = 'Not Eligible';
-            }
-        }
-
-      
-        const accidentFreeChecked = document.getElementById('accidentFree')?.checked ?? false;
-        const safetySystemChecked = document.getElementById('safetySystem')?.checked ?? false;
-
     
-        if (accidentFreeChecked) {
-            totalDiscount += this.baseInsurance * 0.15;
-        }
+            const accidentFreeChecked = document.getElementById('accidentFree')?.checked ?? false;
+            if (accidentFreeChecked) {
+                const accidentDiscount = this.baseInsurance * 0.15;
+                totalDiscount += accidentDiscount;
 
-       
-        if (safetySystemChecked) {
-            totalDiscount += this.baseInsurance * 0.05;
-        }
+                const accidentFreeLine = document.querySelector('.accident-free-discount');
+                if (accidentFreeLine) {
+                    accidentFreeLine.textContent = `No Accident Discount: -HK$${accidentDiscount.toLocaleString()}`;
+                }
+            }
 
-       
-        const finalInsurance = this.baseInsurance - totalDiscount;
-        return Math.max(finalInsurance, 0);
+            const safetySystemChecked = document.getElementById('safetySystem')?.checked ?? false;
+            if (safetySystemChecked) {
+                const safetyDiscount = this.baseInsurance * 0.05;
+                totalDiscount += safetyDiscount;
+                
+                const safetySystemLine = document.querySelector('.safety-system-discount');
+                if (safetySystemLine) {
+                    safetySystemLine.textContent = `Safety System Discount: -HK$${safetyDiscount.toLocaleString()}`;
+                }
+            }
+    
+            const finalInsurance = this.baseInsurance - totalDiscount;
+            return Math.max(finalInsurance, 0);
+        } catch (error) {
+            console.error('Error calculating insurance:', error);
+            return this.baseInsurance;
+        }
     }
-
     calculateSubtotal() {
         return this.cartItems.reduce((total, item) => total + item.price, 0);
     }
@@ -296,11 +357,11 @@ class Checkout {
         const subtotal = this.calculateSubtotal();
         let taxRate;
         if (subtotal <= 150000) {
-            taxRate = 0.4; 
+            taxRate = 0.4;
         } else if (subtotal <= 300000) {
             taxRate = 0.75;
         } else if (subtotal <= 500000) {
-            taxRate = 1.0; 
+            taxRate = 1.0;
         } else {
             taxRate = 1.15;
         }
@@ -322,7 +383,6 @@ class Checkout {
             endDate: endDate.toISOString(),
             createdDate: new Date().toISOString(),
             
-            
             clientName: this.currentUser.name,
             clientId: this.currentUser.id || this.currentUser.email,
             clientEmail: this.currentUser.email,
@@ -330,13 +390,11 @@ class Checkout {
             driverLicense: document.getElementById('driverLicense').value,
             driverAge: parseInt(document.getElementById('userAge').value),
             
-            
             vehicleModel: vehicle.model,
             vehicleYear: vehicle.year,
             vehicleRegistration: vehicle.registration || 'New Vehicle',
             vehicleValue: vehicle.price,
             
-           
             insuranceDetails: {
                 driverAge: parseInt(document.getElementById('userAge').value),
                 accidentFree: document.getElementById('accidentFree').checked,
@@ -345,7 +403,6 @@ class Checkout {
                 totalDiscount: this.baseInsurance - this.calculateInsurance(),
                 finalPremium: this.calculateInsurance()
             },
-            
             
             coverage: [
                 {
@@ -360,9 +417,7 @@ class Checkout {
                 }
             ],
 
-            
             orderId: this.orderId,
-            
             
             history: [{
                 date: new Date().toISOString(),
@@ -371,7 +426,6 @@ class Checkout {
             }]
         };
 
-        
         let policies = JSON.parse(localStorage.getItem('policies')) || [];
         policies.push(policyData);
         localStorage.setItem('policies', JSON.stringify(policies));
@@ -409,15 +463,10 @@ class Checkout {
             }]
         };
 
-        
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
         orders.push(orderData);
         localStorage.setItem('orders', JSON.stringify(orders));
-
-        
         this.createInsurancePolicy();
-
-        
         localStorage.removeItem('cart');
     }
 
@@ -443,27 +492,52 @@ class Checkout {
         `;
     }
 
-    validateDriverInfo() {
-        const age = document.getElementById('userAge').value;
-        const license = document.getElementById('driverLicense').value;
+    updateInsuranceSummary() {
+        if (this.validateAge()) {
+            const insuranceAmount = this.calculateInsurance();
+            
+            const totalInsuranceElement = document.querySelector('.total-insurance');
+            if (totalInsuranceElement) {
+                totalInsuranceElement.textContent = `Final Insurance: HK$${insuranceAmount.toLocaleString()}`;
+            }
+    
+            const insuranceSummaryElement = document.querySelector('.order-summary .summary-item:nth-child(3) span:last-child');
+            if (insuranceSummaryElement) {
+                insuranceSummaryElement.textContent = `HK$${insuranceAmount.toLocaleString()}`;
+            }
+    
+            const totalElement = document.querySelector('.order-summary .summary-item.total span:last-child');
+            if (totalElement) {
+                const total = this.calculateSubtotal() + this.calculateTax() + insuranceAmount;
+                totalElement.textContent = `HK$${total.toLocaleString()}`;
+            }
+        }
+    }
 
-        if (!age || !license) {
-            this.showMessage('Please complete all driver information', 'error');
+    validateAge() {
+        const ageInput = document.getElementById('userAge');
+        if (!ageInput) return false;
+    
+        const age = parseInt(ageInput.value);
+        if (!age) {
+            this.showMessage('Please enter driver\'s age', 'error');
             return false;
         }
-
-        if (parseInt(age) < 18) {
+    
+        if (age < 18) {
             this.showMessage('Driver must be at least 18 years old', 'error');
             return false;
         }
-
-        if (license.length < 8) {
-            this.showMessage('Please enter a valid driver license number', 'error');
+    
+        if (age > 99) {
+            this.showMessage('Please enter a valid age', 'error');
             return false;
         }
-
+    
         return true;
     }
+
+
 
     validateCreditCardInfo() {
         const cardNumber = document.querySelector('.card-number').value;
@@ -505,13 +579,22 @@ class Checkout {
                 }
             });
         });
+
+        const insuranceInputs = ['userAge', 'accidentFree', 'safetySystem'];
+        insuranceInputs.forEach(inputId => {
+            const element = document.getElementById(inputId);
+            if (element) {
+                element.addEventListener('change', () => this.updateInsuranceSummary());
+                if (inputId === 'userAge') {
+                    element.addEventListener('input', () => this.updateInsuranceSummary());
+                }
+            }
+        });
     }
 
     nextStep(currentStep) {
         if (currentStep === 1) {
-            if (!this.validateDriverInfo()) {
-                return;
-            }
+            if (!this.validateDriverInfo()) return;
             document.getElementById('orderReview').classList.add('hidden');
             document.getElementById('paymentMethod').classList.remove('hidden');
         } else if (currentStep === 2) {
@@ -587,5 +670,9 @@ class Checkout {
     }
 }
 
-
 const checkout = new Checkout();
+
+window.onerror = function(msg, url, lineNo, columnNo, error) {
+    console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + error);
+    return false;
+};

@@ -15,7 +15,6 @@ class OrderManager {
     }
 
     loadOrders() {
-       
         const userOrders = this.orders.filter(order => 
             order.userId === this.currentUser.email
         );
@@ -110,37 +109,180 @@ class OrderManager {
             </div>
         `).join('');
 
-        
         this.attachEventListeners();
     }
 
     getOrderActions(order) {
-        switch (order.status) {
+        switch (order.status.toLowerCase()) {
             case 'pending':
                 return `
                     <button onclick="orderManager.cancelOrder('${order.orderId}')" class="cancel-btn">
                         Cancel Order
                     </button>
-                `;
-            case 'processing':
-                return `
                     <button onclick="orderManager.viewDetails('${order.orderId}')" class="view-btn">
                         View Details
                     </button>
                 `;
+            case 'processing':
             case 'completed':
+            case 'cancelled':
                 return `
                     <button onclick="orderManager.viewDetails('${order.orderId}')" class="view-btn">
                         View Details
                     </button>
                 `;
             default:
-                return '';
+                return `
+                    <button onclick="orderManager.viewDetails('${order.orderId}')" class="view-btn">
+                        View Details
+                    </button>
+                `;
         }
     }
 
-    attachEventListeners() {
-        
+    viewDetails(orderId) {
+        const order = this.orders.find(o => o.orderId === orderId);
+        if (!order) return;
+
+        let modal = document.getElementById('orderDetailsModal');
+        if (modal) {
+            modal.remove();
+        }
+
+        const modalHtml = `
+            <div id="orderDetailsModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Order Details</h2>
+                    
+                    <div class="order-info-section">
+                        <h3>Order Information</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="label">Order ID:</span>
+                                <span class="value">${order.orderId}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Order Date:</span>
+                                <span class="value">${new Date(order.orderDate).toLocaleString()}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Status:</span>
+                                <span class="value status-${order.status.toLowerCase()}">${order.status.toUpperCase()}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Payment Method:</span>
+                                <span class="value">${order.paymentMethod}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="customer-info-section">
+                        <h3>Customer Information</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="label">Name:</span>
+                                <span class="value">${order.customerName}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Email:</span>
+                                <span class="value">${order.customerEmail}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Phone:</span>
+                                <span class="value">${order.customerPhone}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="items-section">
+                        <h3>Ordered Items</h3>
+                        ${order.items.map(item => `
+                            <div class="order-detail-item">
+                                <img src="${item.image}" alt="${item.model}" class="item-image">
+                                <div class="item-info">
+                                    <h4>${item.model}</h4>
+                                    <p>Year: ${item.year}</p>
+                                    <p>Price: HK$${item.price.toLocaleString()}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="insurance-section">
+                        <h3>Insurance Details</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="label">Policy ID:</span>
+                                <span class="value">${order.insuranceDetails.policyId}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Driver's Age:</span>
+                                <span class="value">${order.insuranceDetails.driverAge}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Driver's License:</span>
+                                <span class="value">${order.insuranceDetails.driverLicense}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Insurance Premium:</span>
+                                <span class="value">HK$${order.insuranceDetails.finalInsurance.toLocaleString()}</span>
+                            </div>
+                        </div>
+                        <div class="insurance-details">
+                            <div class="info-item">
+                                <span class="label">No Accident Record:</span>
+                                <span class="value">${order.insuranceDetails.accidentFree ? 'Yes' : 'No'}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Safety System Equipped:</span>
+                                <span class="value">${order.insuranceDetails.safetySystem ? 'Yes' : 'No'}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Total Discount:</span>
+                                <span class="value">HK$${order.insuranceDetails.totalDiscount.toLocaleString()}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-summary-section">
+                        <h3>Order Summary</h3>
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <span class="label">Subtotal:</span>
+                                <span class="value">HK$${order.subtotal.toLocaleString()}</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">Tax:</span>
+                                <span class="value">HK$${order.tax.toLocaleString()}</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">Insurance:</span>
+                                <span class="value">HK$${order.insuranceDetails.finalInsurance.toLocaleString()}</span>
+                            </div>
+                            <div class="summary-item total">
+                                <span class="label">Total Amount:</span>
+                                <span class="value">HK$${order.total.toLocaleString()}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+        modal = document.getElementById('orderDetailsModal');
+        const closeBtn = modal.querySelector('.close');
+
+        closeBtn.onclick = () => modal.remove();
+        window.onclick = (event) => {
+            if (event.target === modal) {
+                modal.remove();
+            }
+        };
+
+        modal.style.display = 'block';
     }
 
     cancelOrder(orderId) {
@@ -157,18 +299,18 @@ class OrderManager {
         }
     }
 
-    viewDetails(orderId) {
-        
-        const order = this.orders.find(o => o.orderId === orderId);
-        if (order) {
-           
-        }
+    attachEventListeners() {
+        const closeButtons = document.querySelectorAll('.close');
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.closest('.modal').style.display = 'none';
+            });
+        });
     }
 
-
-    showMessage(message) {
+    showMessage(message, type = 'success') {
         const messageDiv = document.createElement('div');
-        messageDiv.className = 'message';
+        messageDiv.className = `message ${type}`;
         messageDiv.textContent = message;
         
         messageDiv.style.cssText = `
@@ -176,7 +318,7 @@ class OrderManager {
             top: 20px;
             right: 20px;
             padding: 15px 25px;
-            background: #28a745;
+            background: ${type === 'success' ? '#28a745' : '#dc3545'};
             color: white;
             border-radius: 4px;
             z-index: 1000;
@@ -191,9 +333,7 @@ class OrderManager {
     }
 }
 
-
 const orderManager = new OrderManager();
-
 
 function resetFilters() {
     document.getElementById('statusFilter').value = 'all';
@@ -201,3 +341,8 @@ function resetFilters() {
     document.getElementById('endDate').value = '';
     orderManager.loadOrders();
 }
+
+window.onerror = function(msg, url, lineNo, columnNo, error) {
+    console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + error);
+    return false;
+};

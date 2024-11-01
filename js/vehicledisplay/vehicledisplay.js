@@ -1,4 +1,3 @@
-// 車輛數據
 const vehicles = [
     {
         id: 1,
@@ -214,7 +213,7 @@ function updateVehicleDisplay(vehicles) {
     if (vehicles.length === 0) {
         vehiclesGrid.innerHTML = `
             <div class="no-results">
-                <p>沒有找到符合條件的車輛</p>
+                <p>No Matching Vehicle Found</p>
             </div>
         `;
     } else {
