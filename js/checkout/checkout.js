@@ -460,59 +460,117 @@ class Checkout {
                         <!-- Driver Information -->
                         <div class="driver-info-section">
                             <h3>Driver Information</h3>
-                            <div class="form-group">
-                                <label for="userAge">Driver's Age:</label>
-                                <input type="number" id="userAge" min="18" max="99" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="driverLicense">Driver's License Number:</label>
-                                <input type="text" id="driverLicense" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="drivingExperience">Driving Experience (Years):</label>
-                                <input type="number" id="drivingExperience" min="0" max="50" required>
+                            <div class="driver-info-grid">
+                                <div class="form-group">
+                                    <label for="userAge">Driver's Age</label>
+                                    <input 
+                                        type="number" 
+                                        id="userAge" 
+                                        min="18" 
+                                        max="99" 
+                                        placeholder="Enter age" 
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <label for="drivingExperience">Driving Experience (Years)</label>
+                                    <input 
+                                        type="number" 
+                                        id="drivingExperience" 
+                                        min="0" 
+                                        max="50" 
+                                        placeholder="Years of experience" 
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <label for="driverLicense">Driver's License Number</label>
+                                    <input 
+                                        type="text" 
+                                        id="driverLicense" 
+                                        placeholder="Enter license number" 
+                                        required
+                                    >
+                                </div>
                             </div>
                         </div>
 
                         <!-- Coverage Options -->
                         <div class="coverage-options">
                             <h3>Coverage Options</h3>
-                            <div class="coverage-item">
-                                <input type="checkbox" id="thirdPartyLiability" checked disabled>
-                                <label for="thirdPartyLiability">Third Party Liability (Required)</label>
-                                <p>Coverage up to HK$${this.insuranceOptions.thirdPartyLiability.toLocaleString()}</p>
-                            </div>
-                            <div class="coverage-item">
-                                <input type="checkbox" id="personalAccident">
-                                <label for="personalAccident">Personal Accident Cover</label>
-                                <p>Coverage up to HK$${this.insuranceOptions.personalAccident.toLocaleString()}</p>
-                            </div>
-                            <div class="coverage-item">
-                                <input type="checkbox" id="medicalExpenses">
-                                <label for="medicalExpenses">Medical Expenses</label>
-                                <p>Coverage up to HK$${this.insuranceOptions.medicalExpenses.toLocaleString()}</p>
-                            </div>
-                            <div class="coverage-item">
-                                <input type="checkbox" id="windscreenCover">
-                                <label for="windscreenCover">Windscreen Cover</label>
-                                <p>Coverage up to HK$${this.insuranceOptions.windscreenCover.toLocaleString()}</p>
+                            <div class="coverage-grid">
+                                <div class="coverage-item">
+                                    <input type="checkbox" id="thirdPartyLiability" checked disabled>
+                                    <div class="coverage-content">
+                                        <label for="thirdPartyLiability">
+                                            Third Party Liability
+                                            <span class="required-badge">Required</span>
+                                        </label>
+                                        <p>Covers damage to third party property and injury</p>
+                                        <div class="coverage-amount">Coverage up to HK$${this.insuranceOptions.thirdPartyLiability.toLocaleString()}</div>
+                                    </div>
+                                </div>
+                                <div class="coverage-item">
+                                    <input type="checkbox" id="personalAccident">
+                                    <div class="coverage-content">
+                                        <label for="personalAccident">Personal Accident Cover</label>
+                                        <p>Protection for the driver and passengers</p>
+                                        <div class="coverage-amount">Coverage up to HK$${this.insuranceOptions.personalAccident.toLocaleString()}</div>
+                                    </div>
+                                </div>
+                                <div class="coverage-item">
+                                    <input type="checkbox" id="medicalExpenses">
+                                    <div class="coverage-content">
+                                        <label for="medicalExpenses">Medical Expenses</label>
+                                        <p>Covers medical treatment costs from accidents</p>
+                                        <div class="coverage-amount">Coverage up to HK$${this.insuranceOptions.medicalExpenses.toLocaleString()}</div>
+                                    </div>
+                                </div>
+                                <div class="coverage-item">
+                                    <input type="checkbox" id="windscreenCover">
+                                    <div class="coverage-content">
+                                        <label for="windscreenCover">Windscreen Cover</label>
+                                        <p>Covers repair or replacement of vehicle glass</p>
+                                        <div class="coverage-amount">Coverage up to HK$${this.insuranceOptions.windscreenCover.toLocaleString()}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Discounts -->
                         <div class="insurance-discounts">
                             <h3>Available Discounts</h3>
-                            <div class="discount-item">
-                                <input type="checkbox" id="accidentFree">
-                                <label for="accidentFree">No Accident Record (15% off)</label>
-                            </div>
-                            <div class="discount-item">
-                                <input type="checkbox" id="safetySystem">
-                                <label for="safetySystem">Safety System Equipped (5% off)</label>
-                            </div>
-                            <div class="discount-item">
-                                <input type="checkbox" id="garageParking">
-                                <label for="garageParking">Garage Parking (10% off)</label>
+                            <div class="discount-grid">
+                                <div class="discount-item">
+                                    <input type="checkbox" id="accidentFree">
+                                    <div class="discount-content">
+                                        <label for="accidentFree">
+                                            No Accident Record
+                                            <span class="discount-percentage">15% off</span>
+                                        </label>
+                                        <p>For drivers with clean accident records in the past 3 years</p>
+                                    </div>
+                                </div>
+                                <div class="discount-item">
+                                    <input type="checkbox" id="safetySystem">
+                                    <div class="discount-content">
+                                        <label for="safetySystem">
+                                            Safety System Equipped
+                                            <span class="discount-percentage">5% off</span>
+                                        </label>
+                                        <p>For vehicles with advanced safety systems installed</p>
+                                    </div>
+                                </div>
+                                <div class="discount-item">
+                                    <input type="checkbox" id="garageParking">
+                                    <div class="discount-content">
+                                        <label for="garageParking">
+                                            Garage Parking
+                                            <span class="discount-percentage">10% off</span>
+                                        </label>
+                                        <p>For vehicles regularly parked in a secure garage</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
