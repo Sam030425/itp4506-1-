@@ -1,35 +1,79 @@
-
+<!DOCTYPE html>
+<html lang="zh-Hant">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Legend Motor</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/aboutus.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Playfair+Display:ital,wght@0,900;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="icon" href="../images/icon1.png">
 </head>
 <body>
-    <div class="container">
-        <div class="home-section">
-            <a href="/html/index.html" class="home-btn">Home</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/html/index.html" class="logo">Legend Motor</a>
+            <div class="nav-menu">
+                <a href="/html/index.html">Home</a>
+                <a href="/html/vehicledisplay.html">Shop</a>
+                <a href="/html/InsuranceServices.html">Insurance Services</a>
+                <a href="../html/aboutus.html">About Us</a>
+                <div class="user-section">
+                </div>
+                <a href="#" class="cart-icon" onclick="showCart(event)">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
         </div>
-        <h1>About Us</h1>
-        <p>Welcome to Legend Motor, where innovation meets tradition. Founded in 2020, we are dedicated to providing top-quality vehicles that combine cutting-edge technology with unparalleled craftsmanship.</p>
+    </nav>
 
-        <div class="section-title">Our Mission</div>
-        <p>At Legend Motor, our mission is to deliver exceptional vehicles that enhance the driving experience for our customers. We strive to be at the forefront of automotive innovation, ensuring that every vehicle we produce is reliable, efficient, and equipped with the latest features.</p>
-
-        <div class="section-title">Our Vision</div>
-        <p>We envision a future where sustainable and advanced automotive solutions are accessible to everyone. Our commitment to sustainability drives us to create vehicles that not only meet the demands of our customers but also protect our planet.</p>
-
-        <div class="quote">
-            "Driving the future of mobility, one innovation at a time."
+    <div class="main-content">
+        <div class="about-container">
+            <h1>About Us</h1>
+            <div class="about-section">
+                <p>Welcome to Legend Motor, where innovation meets tradition. Founded in 2020, we are dedicated to providing top-quality vehicles that combine cutting-edge technology with unparalleled craftsmanship.</p>
+            
+                <div class="section-title">Our Mission</div>
+                <p>At Legend Motor, our mission is to deliver exceptional vehicles that enhance the driving experience for our customers. We strive to be at the forefront of automotive innovation, ensuring that every vehicle we produce is reliable, efficient, and equipped with the latest features.</p>
+            
+                <div class="section-title">Our Vision</div>
+                <p>We envision a future where sustainable and advanced automotive solutions are accessible to everyone. Our commitment to sustainability drives us to create vehicles that not only meet the demands of our customers but also protect our planet.</p>
+            
+                <div class="quote">
+                    "Driving the future of mobility, one innovation at a time."
+                </div>
+            
+                <div class="section-title">Our Values</div>
+                <p>Integrity, innovation, and customer satisfaction are at the core of Legend Motor. We believe in building lasting relationships with our customers and community, ensuring that we always put their needs first.</p>
+            </div>
         </div>
-
-        <div class="section-title">Our Values</div>
-        <p>Integrity, innovation, and customer satisfaction are at the core of Legend Motor. We believe in building lasting relationships with our customers and community, ensuring that we always put their needs first.</p>
-
-        <footer>
-            &copy; 2024 Legend Motor. All rights reserved.
-        </footer>
     </div>
 
-   
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact us</h3>
+                <p>Telephone : +852 12345678</p>
+                <p>Email : contact@legendmotor.com</p>
+                <p>Address : 21 Yuen Wo Road, Sha Tin, New Territories</p>
+            </div>
+            <div class="footer-section">
+                <h3>Business Hours</h3>
+                <p>Monday - Friday : 09:00-21:00</p>
+                <p>Saturday - Sunday : 10:00-20:00</p>
+            </div>
+            <div class="social-icons">
+                <h3>Follow us</h3>
+                <p><a href="https://www.facebook.com"><i class="fab fa-facebook"></i></a></p>
+                <p><a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a></p>
+                <p><a href="https://www.whatsapp.com/"><i class="fab fa-whatsapp"></i></a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/login/auth.js"></script>
+    <script src="../js/cart/cart.js"></script>
 </body>
 </html>

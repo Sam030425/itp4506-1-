@@ -55,6 +55,11 @@ class ShoppingCart {
         this.items.push({
             id: vehicle.id,
             model: vehicle.model,
+            brand: vehicle.brand,
+            year: vehicle.year,
+            engine: vehicle.engine,
+            mileage: vehicle.mileage,
+            type: vehicle.type,
             price: vehicle.price,
             image: vehicle.image,
             timestamp: new Date().toISOString()

@@ -22,17 +22,6 @@ const vehicles = [
         image: '../images/car2.jpg'
     },
     {
-        id: 3,
-        brand: 'honda',
-        model: 'Honda Civic Type R',
-        year: 2024,
-        mileage: 0,
-        engine: '2.0L VTEC Turbo',
-        price: 458000,
-        type: 'sedan',
-        image: '../images/car3.jpg'
-    },
-    {
         id: 4,
         brand: 'honda',
         model: 'Honda Civic Type R',

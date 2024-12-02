@@ -18,7 +18,12 @@ class OrderManager {
         const userOrders = this.orders.filter(order => 
             order.userId === this.currentUser.email
         );
-        this.displayOrders(userOrders);
+        
+        const sortedOrders = userOrders.sort((a, b) => 
+            new Date(b.orderDate) - new Date(a.orderDate)
+        );
+        
+        this.displayOrders(sortedOrders);
     }
 
     initializeFilters() {
@@ -69,6 +74,8 @@ class OrderManager {
         const ordersList = document.querySelector('.orders-list');
         if (!ordersList) return;
 
+        ordersList.innerHTML = '';
+
         if (orders.length === 0) {
             ordersList.innerHTML = `
                 <div class="no-orders">
@@ -78,37 +85,47 @@ class OrderManager {
             return;
         }
 
-        ordersList.innerHTML = orders.map(order => `
-            <div class="order-card">
-                <div class="order-header">
-                    <span class="order-id">Order #${order.orderId}</span>
-                    <span class="order-date">${new Date(order.orderDate).toLocaleDateString()}</span>
-                    <span class="order-status status-${order.status}">${order.status.toUpperCase()}</span>
-                </div>
-                <div class="order-body">
-                    <div class="order-items">
-                        ${order.items.map(item => `
-                            <div class="order-item">
-                                <img src="${item.image}" alt="${item.model}" class="item-image">
-                                <div class="item-details">
-                                    <div class="item-model">${item.model}</div>
-                                    <div class="item-price">HK$${item.price.toLocaleString()}</div>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-                <div class="order-footer">
-                    <div class="order-total">
-                        Total: HK$${order.total.toLocaleString()}
-                    </div>
-                    <div class="order-actions">
-                        ${this.getOrderActions(order)}
-                    </div>
-                </div>
-            </div>
-        `).join('');
+        const displayedOrders = new Set();
 
+        orders.forEach(order => {
+            if (!displayedOrders.has(order.orderId)) {
+                displayedOrders.add(order.orderId);
+                
+                const orderElement = document.createElement('div');
+                orderElement.className = 'order-card';
+                orderElement.innerHTML = `
+                    <div class="order-header">
+                        <span class="order-id">Order #${order.orderId}</span>
+                        <span class="order-date">${new Date(order.orderDate).toLocaleDateString()}</span>
+                        <span class="order-status status-${order.status}">${order.status.toUpperCase()}</span>
+                    </div>
+                    <div class="order-body">
+                        <div class="order-items">
+                            ${order.items.map(item => `
+                                <div class="order-item">
+                                    <img src="${item.image}" alt="${item.model}" class="item-image">
+                                    <div class="item-details">
+                                        <div class="item-model">${item.model}</div>
+                                        <div class="item-price">HK$${item.price.toLocaleString()}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="order-footer">
+                        <div class="order-total">
+                            Total: HK$${order.total.toLocaleString()}
+                        </div>
+                        <div class="order-actions">
+                            ${this.getOrderActions(order)}
+                        </div>
+                    </div>
+                `;
+                ordersList.appendChild(orderElement);
+            }
+        });
+
+        this.removeEventListeners();
         this.attachEventListeners();
     }
 
@@ -299,11 +316,20 @@ class OrderManager {
         }
     }
 
+    removeEventListeners() {
+        const closeButtons = document.querySelectorAll('.close');
+        closeButtons.forEach(button => {
+            button.replaceWith(button.cloneNode(true));
+        });
+    }
+
     attachEventListeners() {
         const closeButtons = document.querySelectorAll('.close');
         closeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                button.closest('.modal').style.display = 'none';
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+            newButton.addEventListener('click', () => {
+                newButton.closest('.modal').style.display = 'none';
             });
         });
     }

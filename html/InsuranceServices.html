@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Services - Legend Motor</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/insuranceServices.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../images/icon1.png">
+</head>
+<body>
+    <!-- Navigation bar (reuse from index.html) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/html/index.html" class="logo">Legend Motor</a>
+            <div class="nav-menu">
+                <a href="/html/index.html">Home</a>
+                <a href="/html/vehicledisplay.html">Shop</a>
+                <a href="/html/InsuranceServices.html">Insurance Services</a>
+                <a href="../html/aboutus.html">About Us</a>
+                <div class="user-section">
+                </div>
+                <a href="#" class="cart-icon" onclick="showCart(event)">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="insurance-packages">
+        <h2>Choose Your Protection Plan</h2>
+        <div class="package-grid">
+            <div class="package-card basic-card">
+                <div class="package-header">
+                    <h3>Basic Package</h3>
+                    <div class="package-price">HK$5,000</div>
+                    <p>Essential coverage for basic protection</p>
+                </div>
+                <ul class="feature-list">
+                    <li>Third Party Liability (Up to HK$2,000,000)</li>
+                    <li>Basic Vehicle Damage Coverage</li>
+                    <li>24/7 Emergency Support</li>
+                    <li>Basic Roadside Assistance</li>
+                    <li>Claim Support Service</li>
+                </ul>
+            </div>
+
+            <div class="package-card gold-card">
+                <div class="package-header">
+                    <h3>Gold Package</h3>
+                    <div class="package-price">HK$8,000</div>
+                    <p>Enhanced protection for peace of mind</p>
+                </div>
+                <ul class="feature-list">
+                    <li>Everything in Basic Package</li>
+                    <li>Personal Accident Cover (Up to HK$500,000)</li>
+                    <li>Medical Expenses Coverage (Up to HK$100,000)</li>
+                    <li>Windscreen Cover (Up to HK$10,000)</li>
+                    <li>Premium Roadside Assistance</li>
+                    <li>No Claim Discount Protection</li>
+                </ul>
+            </div>
+
+            <div class="package-card platinum-card">
+                <div class="package-header">
+                    <h3>Platinum Package</h3>
+                    <div class="package-price">HK$12,000</div>
+                    <p>Ultimate protection with premium benefits</p>
+                </div>
+                <ul class="feature-list">
+                    <li>Everything in Gold Package</li>
+                    <li>Full Vehicle Replacement Value</li>
+                    <li>Zero Depreciation Cover</li>
+                    <li>Enhanced Personal Accident Cover</li>
+                    <li>Worldwide Coverage</li>
+                    <li>VIP Concierge Service</li>
+                    <li>Priority Claims Processing</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3 style="margin-top: 50px;">Package Comparison</h3>
+        <table class="comparison-table">
+            <tr>
+                <th>Features</th>
+                <th>Basic</th>
+                <th>Gold</th>
+                <th>Platinum</th>
+            </tr>
+            <tr>
+                <td>Third Party Liability</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✓</td>
+            </tr>
+            <tr>
+                <td>Vehicle Damage</td>
+                <td>Basic</td>
+                <td>Enhanced</td>
+                <td>Full</td>
+            </tr>
+            <tr>
+                <td>Personal Accident Cover</td>
+                <td>-</td>
+                <td>✓</td>
+                <td>✓ Enhanced</td>
+            </tr>
+            <tr>
+                <td>Medical Expenses</td>
+                <td>-</td>
+                <td>✓</td>
+                <td>✓</td>
+            </tr>
+            <tr>
+                <td>Windscreen Cover</td>
+                <td>-</td>
+                <td>✓</td>
+                <td>✓</td>
+            </tr>
+            <tr>
+                <td>Worldwide Coverage</td>
+                <td>-</td>
+                <td>-</td>
+                <td>✓</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- Footer (reuse from index.html) -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact us</h3>
+                <p>Telephone : +852 12345678</p>
+                <p>Email : contact@legendmotor.com</p>
+                <p>Address : 21 Yuen Wo Road
+                    Sha Tin, 
+                    New Territories</p>
+            </div>
+            <div class="footer-section">
+                <h3>Business Hours</h3>
+                <p>Monday - Friday : 09:00-21:00</p>
+                <p>Saturday - Sunday : 10:00-20:00</p>
+            </div>
+            <div class="social-icons">
+                <h3>Follow us</h3>
+                <p><a href="https://www.facebook.com"><i class="fab fa-facebook"></i></a></p>
+                <p><a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a></p>
+                <p><a href="https://www.whatsapp.com/"><i class="fab fa-whatsapp"></i></a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/login/auth.js"></script>
+    <script src="../js/cart/cart.js"></script>
+</body>
+</html>

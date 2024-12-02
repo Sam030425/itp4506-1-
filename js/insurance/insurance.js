@@ -158,85 +158,133 @@ class InsuranceManager {
     viewPolicyDetails(policyId) {
         const policy = this.policies.find(p => p.policyId === policyId);
         if (!policy) return;
-
+    
         const modal = document.getElementById('policyModal');
         const detailsContainer = document.getElementById('policyDetails');
-
+    
         detailsContainer.innerHTML = `
             <div class="policy-details">
-                <h2>Policy Details</h2>
-                <div class="detail-section">
-                    <h3>Basic Information</h3>
-                    <div class="detail-row">
-                        <span>Policy ID:</span>
-                        <span>${policy.policyId}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Insurance Type:</span>
-                        <span>${this.getInsuranceTypeDisplay(policy.type)}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Status:</span>
+                <div class="policy-header">
+                    <div class="policy-id-badge">Policy ID: ${policy.policyId}</div>
+                    <div class="policy-status">
                         <span class="status-badge status-${policy.status}">
                             ${this.getStatusDisplay(policy.status)}
                         </span>
                     </div>
-                    <div class="detail-row">
-                        <span>Start Date:</span>
-                        <span>${new Date(policy.startDate).toLocaleDateString()}</span>
+                </div>
+    
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <div class="card-header">
+                            <i class="fas fa-info-circle"></i>
+                            <h3>Policy Information</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-row">
+                                <label>Insurance Type</label>
+                                <span>${this.getInsuranceTypeDisplay(policy.type)}</span>
+                            </div>
+                            <div class="info-row">
+                                <label>Premium</label>
+                                <span class="premium-value">HK$${policy.premium.toLocaleString()}</span>
+                            </div>
+                            <div class="info-row">
+                                <label>Start Date</label>
+                                <span>${new Date(policy.startDate).toLocaleDateString()}</span>
+                            </div>
+                            <div class="info-row">
+                                <label>End Date</label>
+                                <span>${new Date(policy.endDate).toLocaleDateString()}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="detail-row">
-                        <span>End Date:</span>
-                        <span>${new Date(policy.endDate).toLocaleDateString()}</span>
+    
+                    <div class="policy-card">
+                        <div class="card-header">
+                            <i class="fas fa-user"></i>
+                            <h3>Client Details</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-row">
+                                <label>Full Name</label>
+                                <span>${policy.clientName}</span>
+                            </div>
+                            <div class="info-row">
+                                <label>ID Number</label>
+                                <span>${this.maskIdNumber(policy.clientId)}</span>
+                            </div>
+                            <div class="info-row">
+                                <label>Phone</label>
+                                <span>${policy.clientPhone}</span>
+                            </div>
+                            <div class="info-row">
+                                <label>Email</label>
+                                <span>${policy.clientEmail}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="detail-row">
-                        <span>Premium:</span>
-                        <span>HK$${policy.premium.toLocaleString()}</span>
+    
+                    ${policy.type === 'vehicle' || policy.type === 'comprehensive' ? `
+                        <div class="policy-card">
+                            <div class="card-header">
+                                <i class="fas fa-car"></i>
+                                <h3>Vehicle Details</h3>
+                            </div>
+                            <div class="card-content">
+                                <div class="info-row">
+                                    <label>Model</label>
+                                    <span>${policy.vehicleModel}</span>
+                                </div>
+                                <div class="info-row">
+                                    <label>Registration</label>
+                                    <span>${policy.vehicleRegistration}</span>
+                                </div>
+                                <div class="info-row">
+                                    <label>Year</label>
+                                    <span>${policy.vehicleYear}</span>
+                                </div>
+                            </div>
+                        </div>
+                    ` : ''}
+    
+                    <div class="policy-card full-width">
+                        <div class="card-header">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Coverage Details</h3>
+                        </div>
+                        <div class="card-content coverage-grid">
+                            ${policy.coverage.map(item => `
+                                <div class="coverage-card">
+                                    <h4>${item.name}</h4>
+                                    <div class="coverage-amount">HK$${item.limit.toLocaleString()}</div>
+                                    <p>${item.description}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+    
+                    <div class="policy-card full-width">
+                        <div class="card-header">
+                            <i class="fas fa-history"></i>
+                            <h3>Policy Timeline</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="timeline">
+                                ${this.getPolicyTimeline(policy)}
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="detail-section">
-                    <h3>Client Information</h3>
-                    <div class="detail-row">
-                        <span>Name:</span>
-                        <span>${policy.clientName}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>ID Number:</span>
-                        <span>${this.maskIdNumber(policy.clientId)}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Phone:</span>
-                        <span>${policy.clientPhone}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Email:</span>
-                        <span>${policy.clientEmail}</span>
-                    </div>
-                </div>
-
-                ${this.getVehicleDetailsHTML(policy)}
-
-                <div class="detail-section">
-                    <h3>Coverage Details</h3>
-                    ${this.getCoverageDetailsHTML(policy)}
-                </div>
-
-                <div class="detail-section">
-                    <h3>Policy History</h3>
-                    <div class="status-timeline">
-                        ${this.getPolicyTimeline(policy)}
-                    </div>
-                </div>
-
-                <div class="action-buttons">
+    
+                <div class="policy-actions">
                     ${this.getDetailActionButtons(policy)}
                 </div>
             </div>
         `;
-
+    
         modal.style.display = 'block';
     }
+    
 
     getVehicleDetailsHTML(policy) {
         if (policy.type === 'vehicle' || policy.type === 'comprehensive') {

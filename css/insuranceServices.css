@@ -1,0 +1,233 @@
+.insurance-hero {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../images/insurance-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.hero-content {
+    max-width: 800px;
+    padding: 20px;
+}
+
+.insurance-packages {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.package-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 改為固定3列 */
+    gap: 30px;
+    margin-top: 40px;
+    padding: 0 20px;
+}
+
+/* 新增響應式設計 */
+@media (max-width: 1024px) {
+    .package-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 0 10px;
+    }
+    
+    .package-card {
+        padding: 20px;
+    }
+    
+    .package-price {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 768px) {
+    .package-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 40px auto 0;
+    }
+}
+
+/* 調整卡片最小寬度 */
+.package-card {
+    min-width: 280px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 30px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.package-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.package-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.package-price {
+    font-size: 2.5em;
+    color: #007bff;
+    margin: 15px 0;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+.feature-list li:before {
+    content: "✓";
+    color: #28a745;
+    margin-right: 10px;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 50px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 20px;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid #eee;
+}
+
+.comparison-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+}
+
+.comparison-table th:first-child {
+    text-align: left;
+    padding-left: 30px;
+}
+
+.comparison-table td:first-child {
+    text-align: left;
+    padding-left: 30px;
+    font-weight: 500;
+    color: #444;
+}
+
+.comparison-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.comparison-table td:not(:first-child) {
+    font-weight: 500;
+}
+
+/* 改善勾選標記的樣式 */
+.comparison-table td:not(:first-child):not(:empty) {
+    position: relative;
+}
+
+.comparison-table td:not(:first-child) {
+    color: #666;
+}
+
+/* Basic 列樣式 */
+.comparison-table th:nth-child(2),
+.comparison-table td:nth-child(2) {
+    background-color: rgba(108, 117, 125, 0.05);
+}
+
+/* Gold 列樣式 */
+.comparison-table th:nth-child(3),
+.comparison-table td:nth-child(3) {
+    background-color: rgba(255, 193, 7, 0.05);
+}
+
+/* Platinum 列樣式 */
+.comparison-table th:nth-child(4),
+.comparison-table td:nth-child(4) {
+    background-color: rgba(140, 255, 248, 0.05);
+}
+
+/* 勾選符號樣式 */
+.comparison-table td:not(:first-child):contains("✓") {
+    color: #28a745;
+    font-size: 1.2em;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .comparison-table {
+        font-size: 14px;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 12px 8px;
+    }
+
+    .comparison-table th:first-child,
+    .comparison-table td:first-child {
+        padding-left: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .comparison-table {
+        font-size: 12px;
+    }
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #0056b3;
+}
+
+.basic-card {
+    border-color: #6c757d;
+    border-width: 3px;  /* 加粗邊框 */
+}
+
+.gold-card {
+    border-color: #ffc107;
+    border-width: 3px;  /* 加粗邊框 */
+}
+
+.platinum-card {
+    border-color:  #8cfff8;
+    border-width: 3px;  /* 加粗邊框 */
+}

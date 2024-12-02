@@ -1,4 +1,3 @@
-/* 基本容器樣式 */
 .orders-container {
     max-width: 1200px;
     margin: 100px auto 40px;
@@ -11,7 +10,6 @@
     font-size: 2rem;
 }
 
-/* 篩選器樣式 */
 .order-filters {
     display: flex;
     gap: 1rem;
@@ -50,7 +48,6 @@
     background: #5a6268;
 }
 
-/* 訂單卡片樣式 */
 .order-card {
     background: white;
     border-radius: 8px;
@@ -90,7 +87,6 @@
     font-weight: 500;
 }
 
-/* 狀態標籤顏色 */
 .status-pending {
     background: #fff3cd;
     color: #856404;
@@ -111,7 +107,6 @@
     color: #721c24;
 }
 
-/* 訂單內容樣式 */
 .order-body {
     padding: 1rem;
 }
@@ -170,7 +165,6 @@
     color: #333;
 }
 
-/* 按鈕樣式 */
 .order-actions button {
     padding: 0.5rem 1rem;
     border: none;
@@ -199,7 +193,6 @@
     background: #c82333;
 }
 
-/* 模態窗口樣式 */
 .modal {
     display: none;
     position: fixed;
@@ -237,7 +230,6 @@
     color: #333;
 }
 
-/* 訂單詳情樣式 */
 .info-grid, .summary-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -305,7 +297,6 @@
     border-top: 2px solid #dee2e6;
 }
 
-/* 分區標題樣式 */
 .order-info-section,
 .customer-info-section,
 .items-section,
@@ -327,7 +318,6 @@
     border-bottom: 2px solid #007bff;
 }
 
-/* 消息提示樣式 */
 .message {
     position: fixed;
     top: 20px;
@@ -351,7 +341,6 @@
     }
 }
 
-/* 無訂單時的樣式 */
 .no-orders {
     text-align: center;
     padding: 40px;
@@ -365,7 +354,6 @@
     font-size: 1.2rem;
 }
 
-/* 響應式設計 */
 @media (max-width: 768px) {
     .orders-container {
         margin-top: 80px;

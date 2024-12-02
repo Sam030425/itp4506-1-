@@ -64,11 +64,19 @@ class SalesManager {
         const statusFilter = document.getElementById('statusFilter').value;
         const dateFilter = document.getElementById('dateFilter').value;
 
+        const processedOrderIds = new Set();
    
-        let filteredOrders = this.orders.filter(order => 
-            order.salesPersonId === this.currentUser.id ||
-            !order.salesPersonId
-        );
+        let filteredOrders = this.orders.filter(order => {
+            if (processedOrderIds.has(order.orderId)) {
+                return false;
+            }
+            
+            if (order.salesPersonId === this.currentUser.id || !order.salesPersonId) {
+                processedOrderIds.add(order.orderId);
+                return true;
+            }
+            return false;
+        });
 
         if (statusFilter !== 'all') {
             filteredOrders = filteredOrders.filter(order => order.status === statusFilter);
@@ -82,6 +90,8 @@ class SalesManager {
         }
 
         filteredOrders.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
+
+        tbody.innerHTML = '';
 
         tbody.innerHTML = filteredOrders.map(order => `
             <tr>
@@ -291,33 +301,39 @@ class SalesManager {
         const order = this.orders.find(o => o.orderId === orderId);
         if (!order) return;
 
-        if (!order.salesPersonId) {
-            order.salesPersonId = this.currentUser.id;
-            order.salesPersonName = this.currentUser.name;
+        const hasExistingStatus = order.statusHistory?.some(
+            history => history.status === newStatus
+        );
+
+        if (!hasExistingStatus) {
+            if (!order.salesPersonId) {
+                order.salesPersonId = this.currentUser.id;
+                order.salesPersonName = this.currentUser.name;
+            }
+
+            if (!order.statusHistory) {
+                order.statusHistory = [];
+            }
+
+            order.statusHistory.push({
+                status: newStatus,
+                date: new Date().toISOString(),
+                text: `Order ${newStatus.charAt(0).toUpperCase() + newStatus.slice(1)} by ${this.currentUser.name}`
+            });
+
+            order.status = newStatus;
+            localStorage.setItem('orders', JSON.stringify(this.orders));
+
+            this.loadOrders();
+            this.loadSalesOverview();
+            
+            const modal = document.getElementById('orderModal');
+            if (modal.style.display === 'block') {
+                this.viewOrderDetails(orderId);
+            }
+
+            this.showMessage(`Order ${orderId} has been ${newStatus}`);
         }
-
-        if (!order.statusHistory) {
-            order.statusHistory = [];
-        }
-
-        order.statusHistory.push({
-            status: newStatus,
-            date: new Date().toISOString(),
-            text: `Order ${newStatus.charAt(0).toUpperCase() + newStatus.slice(1)} by ${this.currentUser.name}`
-        });
-
-        order.status = newStatus;
-        localStorage.setItem('orders', JSON.stringify(this.orders));
-
-        this.loadOrders();
-        this.loadSalesOverview();
-        
-        const modal = document.getElementById('orderModal');
-        if (modal.style.display === 'block') {
-            this.viewOrderDetails(orderId);
-        }
-
-        this.showMessage(`Order ${orderId} has been ${newStatus}`);
     }
 
     initializeFilters() {
